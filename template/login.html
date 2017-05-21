@@ -1,0 +1,200 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="{% static 'css/login_supersized.css' %}">
+
+    <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/supersized.3.2.7.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/login-supersized-init.js' %}"></script>
+    <title>用户登陆</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .user_input
+        {
+            width: 210px;
+            height: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 31%;
+            top: 24%;
+        }
+
+        .pwd_input{
+            width: 210px;
+            height: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 31%;
+            top: 39%;
+        }
+        .code_input{
+            width: 90px;
+            height: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            vertical-align:middle;
+            left: 31%;
+            top: 52%;
+        }
+
+        .user_font{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 17%;
+            top: 21%;
+        }
+        .pwd_font{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 17%;
+            top: 35%;
+        }
+        .code_font{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 17%;
+            top: 49%;
+        }
+        .a_font{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 75%;
+            top: 50%;
+        }
+        .ui-validate-text{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 50%;
+            top: 53%;
+            height: 30px;
+            width: 120px;
+            vertical-align: middle;
+            cursor:pointer;
+        }
+        .div_head
+        {
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 44%;
+            top: 5%;
+        }
+
+
+        .note_div{
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 27%;
+            top: 80%;
+        }
+
+        .sub_btn
+        {
+            width:100px;
+            height:40px;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            left: 38%;
+            top: 69%;
+        }
+
+        .div_login {
+            background-color: #00FFFF;
+            margin-right: auto;
+            height: 300px;
+            width: 500px;
+            text-align: center;
+            margin-top: -175px;
+            margin-left: -250px;
+            line-height: 50px;
+            vertical-align: -13px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+        a{
+            text-decoration: none;
+        }
+        .qr-code-img{
+            position: absolute;
+            z-index: 50;
+            right: 12%;
+            width:200px;
+            height:200px;
+            top: 92%;
+
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div_login">
+        <div class="div_head">
+            <span><strong><font size="5" color="blue"><label>登录</label></font></strong></span>
+        </div>
+        <!-- from表单 Start-->
+        <form method='post' enctype="multipart/form-data">
+            <div>
+                <font class="user_font" size="4" color="blue">帐　号:</font>
+                <input type="text" name="username" class="user_input" placeholder="请输入帐号" required="required"
+                       oninvalid="this.setCustomValidity('请输入帐号');" oninput="setCustomValidity('')"/>
+            </div>
+            <div>
+                <font class="pwd_font" size="4" color="blue">密　码:</font>
+                <input type="password" name="password" class="pwd_input" placeholder="请输入密码" required="required"
+                       oninvalid="this.setCustomValidity('请输入密码');" oninput="setCustomValidity('')"/>
+            </div>
+            <div>
+                <font class="code_font" size="4" color="blue">验证码:</font>
+                <input type="Captcha" name="Captcha" class="code_input"
+                       placeholder="请输入验证码"
+                       required="required" oninvalid="this.setCustomValidity('请输入验证码');" oninput="setCustomValidity('')"/>
+                <img class="ui-validate-text"
+                     src="get_code"
+                     onclick="this.src='get_code?v='+Math.random();"
+                     title="点击更换验证码"
+                     alt="验证码"/>
+                <a class="a_font" href="javascript:void(0)" onclick="$('.ui-validate-text').click()" title="看不清，换一换">换一换</a>
+            </div>
+            <div>
+                <input type="submit" class="sub_btn" value="登录"/>
+            </div>
+        </form>
+        <!--from表单 End-->
+        <img class="qr-code-img" hidden="hidden" src="{% static 'img/upload/刘亦菲.jpg' %}">
+        <div class="note_div">
+            <strong><font color="red">注意事项</font></strong>
+            <span>第一次使用请<a class="weixin" href="{% url "register" %}">注册帐号</a></span>
+        </div>
+    </div>
+</body>
+    <script>
+        $(function () {
+        $(".weixin").bind("mouseover", function () {
+
+            $(".qr-code-img").show()
+
+        });
+        $(".weixin").bind("mouseout", function () {
+
+            $(".qr-code-img").hide()
+        });
+    });
+    </script>
+</html>

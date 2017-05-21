@@ -1,0 +1,311 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <title>QQ在线人数</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+    <meta content="telephone=no,email=no" name="format-detection"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.4.0/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmGrid.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmPaginator.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmPaginator-bootstrap.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/uikit.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/components/slidenav.min.css' %}"/>
+    <style>
+        #btn-add-commodity {
+            color: white;
+        }
+
+        @media screen and (min-width: 660px) and (max-width: 992px) {
+            .col-md-2 {
+                float: left;
+                width: 160px;
+            }
+
+            .col-md-4 {
+                float: left;
+                width: 235px;
+            }
+        }
+
+        .fa {
+            padding-right: 5px;
+        }
+
+        .dropdown-menu li a {
+            color: black !important;
+        }
+
+        .table-top-style {
+            background: aliceblue;
+            margin-bottom: 10px;
+            padding: 15px;
+            /*display: inline-block;*/
+        }
+
+        .table-paginator {
+            text-align: right;
+        }
+
+        .btn-right {
+            float: right;
+            margin-right: 15px;
+        }
+
+        #table6-1 {
+            clear: both;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "Arial", "Microsoft Yahei" !important;
+            color: #999999;
+        }
+
+        .action-module-active h4 {
+            color: white;
+        }
+
+        .btn {
+            webkit-box-shadow: none !important;
+            -moz-box-shadow: none !important;
+            box-shadow: none !important;
+            background-color: white;
+        {#            color: #bababa;#}
+        }
+
+        .treeview-menu li a {
+            margin-left: 20px !important;
+        }
+
+        .treeview > a:before {
+            font-family: 'FontAwesome';
+            content: "\f105";
+            position: absolute;
+            right: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+<div class="notifications bottom-right" style="z-index: 100"></div>
+<header class="header">
+    <section class="content-header">
+        <h1>
+            表格
+            <small>在线人数</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'main' %}">首页</a></li>
+            <li class="active">在线人数</li>
+        </ol>
+    </section>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside class="side">
+        <!-- Content Header (Page header) -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="box-tools"></div>
+                            <div class="box-body table-responsive">
+                                <div class="table-top-style">
+                                    <div class="form-group col-md-4">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" placeholder="请选择日期" class="form-control pull-right"
+                                                   id="reservation"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <input type="text" class="form-control" placeholder="请输入ID"
+                                               id="content-id"/>
+                                    </div>
+                                    <input type="button" value="筛选" id="btnFilter" class="btn btn-primary"/>
+                                    <a href="{% url 'ad_content_edit' %}?action=add" id="btn-add-commodity"
+                                       class="btn btn-primary btn-right">添加数据</a>
+                                </div>
+                                <div class="table-top-style">
+                                    <button class="btn btn-primary" id="btnAuditPass" disabled="disabled"><i
+                                            class="fa fa-check-circle"></i>通过
+                                    </button>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-danger" id="btnAuditFail" disabled="disabled"><i
+                                            class="fa fa-times"></i>拒绝
+                                    </button>
+                                </div>
+                                <table id="table6-1"></table>
+                                <div class="table-paginator">
+                                    <div id="paginator11-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>版权所有</p>
+        </footer>
+    </aside>
+    <!-- /.right-side -->
+</div>
+<!-- ./wrapper -->
+<div class='notifications bottom-right'></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
+<script src="{% static 'mmGrid/mmGrid.js' %}"></script>
+<script src="{% static 'mmGrid/mmPaginator.js' %}"></script>
+<script src="{% static 'js/mmGrid-adaptor.js' %}"></script>
+{#  解决IE8的js新特性兼容问题  #}
+<script src="{% static 'uikit-2.17.0/js/es5-shim.min.js' %}"></script>
+<script src="{% static 'uikit-2.17.0/js/core/core.min.js' %}"></script>
+<script src="{% static 'uikit-2.17.0/js/core/modal.min.js' %}"></script>
+<script src="{% static 'uikit-2.17.0/js/components/lightbox.min.js' %}"></script>
+
+<script>
+    var url = {
+        ad_content: "{% url 'ad_content' %}",
+        ad_content_delete: "{% url 'ad_content_delete' %}"
+    };
+    var cols = [
+        {
+            title: "ID",
+            name: '_id',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item._id);
+            }
+        }, {
+            title: "在线人数",
+            name: 'online_number',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item.online_number);
+            }
+        }, {
+            title: '当前时间',
+            sortable: true,
+            name: 'system_time',
+            align: 'center',
+            hidden: MmGrid.adaptor(714),
+            renderer: function (val, item) {
+                return createGridHtml(item.system_time);
+            }
+        }, {
+            title: '操作',
+            width: 200,
+            align: 'center',
+            renderer: function (val, item) {
+                var value = item._id;
+                return '<a href="ad_content_edit?action=edit&_id=' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-pencil-square-o"></i>编辑</a>&nbsp;' +
+                        '<a href="content_detail/' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-external-link"></i>详情</a>&nbsp;' +
+                        '<a href="javascript:void(0)" data-id="' + item._id + '" data-name="' + item._id + '" class="btn btn-default btn-delete"> <i class="fa fa-trash-o"></i>删除</a>';
+            }
+        }];
+    function renderGrid(url) {
+        var mmgrid = $('#table6-1').mmGrid({
+            cols: cols,
+            height: "auto",
+            url: url,
+            method: 'post',
+            remoteSort: true,
+            fullWidthRows: true,
+            sortName: '',
+            sortStatus: 'asc',
+            {#            checkCol: true, //增加单选框#}
+            {#            multiSelect: true,//复选#}
+            nowrap: true,//内容不折行
+            plugins: [$('#paginator11-1').mmPaginator()],
+            params: function () {
+                //如果这里有验证，在验证失败时返回false则不执行AJAX查询。
+                var obj = {};
+                // 时间段
+                var dateRange = $("#reservation").val();
+                // 数据id
+                var content_id = $("#content-id").val();
+                if (!isNull(content_id)) {
+                    obj._id = content_id;
+                }
+                if (!isNull(dateRange)) {
+                    obj.dateRange = dateRange;
+                }
+                return obj
+            }
+        });
+        // 通过、拒绝操作，为checkbox绑定事件
+        $(document).delegate("input[type='checkbox']", "change", function () {
+            //获取选中的数据,不管是否有单选、复选框都有效
+            var rows = mmgrid.selectedRows();
+            if (rows.length > 0) {
+                $("#btnAuditPass").attr("disabled", false);
+                $("#btnAuditFail").attr("disabled", false);
+            } else {
+                $("#btnAuditPass").attr("disabled", true);
+                $("#btnAuditFail").attr("disabled", true);
+            }
+        });
+        return mmgrid;
+    }
+
+    function isNull(data) {
+        if (data.indexOf("请") > -1) {
+            return true
+        }
+        return /^\s*$/gi.test(data);
+    }
+
+    var timer = null;
+
+    $(function () {
+        //加载日期控件
+        $('#reservation').daterangepicker({"maxDate": new Date()});
+        //渲染表格
+        var mmg = renderGrid(url.ad_content);
+        $("#btnFilter").bind("click", function () {
+            // 筛选后重新加载表格数据
+            mmg.load({page: 1});
+        });
+        var table = $('#table6-1');
+        // 绑定删除
+        table.delegate('.btn-delete', 'click', function () {
+            var name = $(this).attr('data-name');
+            if (window.confirm('确定删除 <' + name + '> ?')) {
+                var id = $(this).attr('data-id');
+                $.post(url.ad_content_delete, {"id": id}, function (data) {
+                    if (data.status == 0) {
+                        //dwnotify("删除成功!");
+                        alert('删除成功!');
+                        window.location.reload();
+                    } else {
+                        //dwerror("删除失败！");
+                        alert('删除失败');
+                    }
+                }, 'json');
+            }
+        });
+    });
+</script>
+<script type="text/javascript" src="{% static 'js/common-mmgrid.js' %}">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+@charset "utf-8";
+/* reset */
+body,h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,pre,form,input,textarea,th,td,select{margin:0;padding:0;}
+em{font-style:normal}
+li{list-style:none}
+a{text-decoration:none;}
+img{border:none; vertical-align:top;}
+table{border-collapse:collapse;}
+textarea{ resize:none;overflow:auto;}
+/* end reset */
+
+/* public */
+body{ background:url(../img/bg.gif) repeat-x #d9e2ce; min-width:960px;}
+.wrap{width:960px;margin:0 auto;}
+#header{background:url(../img/head_bg.jpg) no-repeat center 0;}
+.header{height:94px;}
+#nav{height:43px;background:url(../img/nav_bg.png) no-repeat;}
+#nav li{float:left;width:118px;padding-right:8px; position:relative;}
+#nav a{ display:block;padding-top:1px;line-height:42px; font-size:16px;color:#fdfbf9; text-align:center; background:url(../img/nav_hover.png) no-repeat center 50px;}
+#nav a:hover,#nav .active{background-position:center 0;}
+
+#main{;height: 1000px;border: 1px #000 solid;margin-top: 10px;}
+.left_up{width:100%;border: 1px solid #000;height: 300px;}
+.slide_pic{width: 45%;height:298px;border: 1px solid #000;display: inline-block;float: left;}
+.left_left{width: 50%;height:298px;;display: inline-block; margin-left:10px; }
+.up_left_title{height: 20px;font-weight: }
+.up_left_content  .content{width:60%;float: left; }
+.up_left_content .content_time{width: 38%;float: left;}
+.content li{margin: 8px 0}
+.content li a:hover{color: blue;}
+.content_time li{margin: 8px 0}
+
+.left{display: inline-block;width: 78%;float: left;}
+.right{display:inline-block; width: 21%;float: left;}
+
+
+.left_middle{float: left;width: 100% ;border:1px solid #000;}
+.middle_left{float:left;width: 50%;height: 300px;}
+.middle_right{float:left;width: 50%;height: 300px;}
+
+
+
+.left_bottom{float: left;width: 720px ;border:1px solid #000;}
+.left_bottom li{float:left;width: 350px;height: 300px}
+.bottom_left{ border-right: 1px solid #000;}
+
+
+/*SWiper*/
+ 
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+
+/*辅导员风采*/
+.picMarquee-top{ margin:0 auto;  width:210px; overflow:hidden; position:relative;  border:1px solid #ccc;   }
+		.picMarquee-top .hd{ overflow:hidden;  height:30px; background:#f4f4f4; padding:0 10px;  }
+		.picMarquee-top .hd .prev,.picMarquee-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+			 cursor:pointer; background:url("../images/arrow.png") 0 -100px no-repeat;}
+		.picMarquee-top .hd .next{ background-position:0 -140px;  }
+		.picMarquee-top .hd .prevStop{ background-position:-60px -100px;  }
+		.picMarquee-top .hd .nextStop{ background-position:-60px -140px;  }
+		.picMarquee-top .bd{ padding:10px;   }
+		.picMarquee-top .bd ul{ overflow:hidden; zoom:1; }
+		.picMarquee-top .bd ul li{ text-align:center; zoom:1; }
+		.picMarquee-top .bd ul li .pic{ text-align:center; }
+		.picMarquee-top .bd ul li .pic img{ width:180px; height:90px; display:block; padding:2px; border:1px solid #ccc; }
+		.picMarquee-top .bd ul li .pic a:hover img{ border-color:#999;  }
+		.picMarquee-top .bd ul li .title{ line-height:24px;   }
+
+
+
+
+
+
+        /* 通知公告css */
+        .slideTxtBox{ width:100%; border:1px solid #ddd; text-align:left;  }
+        .slideTxtBox .hd{ height:30px; line-height:30px; background:#f4f4f4; padding:0 10px 0 20px;   border-bottom:1px solid #ddd;  position:relative; }
+        .slideTxtBox .hd ul{ float:left; position:absolute; left:20px; top:-1px; height:32px;   }
+        .slideTxtBox .hd ul li{ float:left; padding:0 15px; cursor:pointer;  }
+        .slideTxtBox .hd ul li.on{ height:30px;  background:#fff; border:1px solid #ddd; border-bottom:2px solid #fff; }
+        .slideTxtBox .bd ul{ padding:15px;  zoom:1;  }
+        .slideTxtBox .bd li{ height:24px; line-height:24px;   }
+        .slideTxtBox .bd li .date{ float:right; color:#999;  }
+
+        /* 下面是前/后按钮代码，如果不需要删除即可 */
+        .slideTxtBox .arrow{  position:absolute; right:10px; top:0; }
+        .slideTxtBox .arrow a{ display:block;  width:5px; height:9px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 0 no-repeat; }
+        .slideTxtBox .arrow .next{ background-position:0 -50px;  }
+        .slideTxtBox .arrow .prevStop{ background-position:-60px 0; }
+        .slideTxtBox .arrow .nextStop{ background-position:-60px -50px; }
+
+
+
+/* end public */
+
+/* index(i) */
+
+/* end index */
+
+/* room(r) */
+
+/* end room */
+
+
+/* product(p)  */
+
+/* end product*/

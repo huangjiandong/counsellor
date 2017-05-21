@@ -1,0 +1,114 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>用户注册</title>
+    <style>
+        body {
+            text-align: center;
+            background-image: url({% static 'img/2.jpg' %});
+            background-size: cover;
+        }
+
+        .input_class {
+            width: 246px;
+            height: 30px;
+        }
+
+        .div_login {
+            background-color: #00FFFF;
+            height: 500px;
+            width: 500px;
+            text-align: center;
+            margin-top: -225px;
+            line-height: 50px;
+            vertical-align: -13px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%); /* 相对div本身向上偏移50% */
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <script language="javascript">
+        function Passwordcheck() {
+            if (document.register.password.value != document.register.password2.value) {
+                alert("两次密码不一致");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+    </script>
+</head>
+
+<body bgcolor="E6EFF8">
+<div class="div_login">
+    <div>
+        <p><strong><font size="5" color="blue"><b>注册</b></font></strong></p>
+    </div>
+    <!-- from表单 Start-->
+    <form method='post' name="register" enctype="multipart/form-data">
+        <div>
+            <font size="4" color="blue">帐　　号:</font>
+            <input type="text" name="username" class="input_class" placeholder="输入帐号" required="required"
+                   oninvalid="this.setCustomValidity('请输入帐号');" oninput="setCustomValidity('')"/>
+        </div>
+        <div>
+            <font size="4" color="blue">密　　码:</font>
+            <input type="password" name="password" class="input_class" placeholder="输入密码" required="required"
+                   oninvalid="this.setCustomValidity('请输入密码');" oninput="setCustomValidity('')"/>
+        </div>
+        <div>
+            <font size="4" color="blue">确认密码:</font>
+            <input type="password" name="password2" class="input_class" placeholder="再次输入密码" required="required"
+                   oninvalid="this.setCustomValidity('请再次输入密码');" oninput="setCustomValidity('')"/>
+        </div>
+        <div>
+            <font size="4" color="blue">昵　　称:</font>
+            <input type="text" name="nickname" class="input_class" placeholder="输入昵称" required="required"
+                   oninvalid="this.setCustomValidity('请输入昵称');" oninput="setCustomValidity('')"/>
+        </div>
+        <div>
+            <font size="4" color="blue">住　　址:</font>
+                <select id="selProvince" class="form-control"></select>
+                <select id="selCity" class="form-control"></select>
+                <select id="selArea" class="form-control"></select>
+        </div>
+        <div>
+            <font size="4" color="blue">上传头像:</font>
+            <input id="form-file" name="upload_head" multiple type="file" placeholder="选择你的头像"
+                   style="height: 35px;width: 250px"
+                   onchange="previewImage(this)" required="required"/>
+        </div>
+        <input type="submit" value="提交" style="width:100px;height:40px;background-color:E6EFF8"
+               onclick="return Passwordcheck();"/>
+        <input type="reset" value="取消" style="width:100px;height:40px;background-color:E6EFF8"/>
+
+        <div class="rg-form-right">
+            <label>已有账号？请直接<a href="{% url 'login' %}">登录</a></label>
+        </div>
+    </form>
+    <!-- from表单 End-->
+</div>
+<script src="{% static 'js/address.js' %}"></script>
+<script>
+    addressInit('selProvince', 'selCity', 'selArea');
+    function previewImage(file) {
+        var fileUpload = document.getElementById("form-file");
+        var imagePath = fileUpload.value;
+        var type = imagePath.substr(imagePath.lastIndexOf(".")).toUpperCase();
+        if (!(type == ".JPEG" || type == ".JPG" || type == ".GIF" || type == ".PNG")) {
+            alert('只能上传(jpg)|(png)|(bmp)|(gif)|(jpeg)格式的图片');
+            fileUpload.value="";
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

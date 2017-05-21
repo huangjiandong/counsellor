@@ -1,0 +1,172 @@
+{% load staticfiles %}
+{% load url from future %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/img/upload/刘亦菲.jpg">
+    <title>主页</title>
+
+    <link href="{% static 'sbadmin/bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'sbadmin/bower_components/metisMenu/dist/metisMenu.min.css' %}" rel="stylesheet">
+    <link href="{% static 'sbadmin/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'sbadmin/bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+            <script src="{% static 'assets/js/html5shiv.js' %}"></script>
+            <script src="{% static 'assets/js/respond.min.js' %}"></script>
+        <![endif]-->
+</head>
+<body>
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header pull-left">
+            <a class="navbar-brand">django、bootstrap学习</a>
+        </div>
+        <!-- /.navbar-header -->
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    {# 获取cookie中的值request.COOKIES.upload_head #}
+                    <img class="nav-user-photo" src="{{ request.session.upload_head }}" alt="头像"/>
+                            <span class="user-info">
+                                <small>欢迎</small>
+                                {{ request.session.username }}
+                            </span>
+                    <i class="icon-caret-down"></i>
+                    <i class="fa fa-caret-down"></i> </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a class="menuc" url="{% url 'my_profile' %}" href="javascript:void(0)"><i
+                                class="fa fa-user fa-fw"></i> 个人资料</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="menuc" url="{% url 'modify_pwd' %}" href="javascript:void(0)"><i
+                                class="fa fa-pencil-square-o"></i> 修改密码</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav nav-list" id="side-menu">
+                    {% for i in all_menu %}
+                        {% if i.id in menu %}
+                            {% if i.pid == 0 and i.first == 2 %}
+                                <li>
+                                    <a class="menuc" url='{{ i.url }}' href="javascript:void(0)">
+                                        <i class="{{ i.icon }}"></i>
+                                        <span class="menu-text"> {{ i.name }} </span>
+                                    </a>
+                                </li>
+                            {% elif i.pid == 0 and i.first == 1 %}
+                                <li>
+                                    <a href="javascript:void(0)">{{ i.name }}<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        {% for a in all_menu %}
+                                            {% if a.id in menu and i.id == a.pid %}
+                                                <li><a class="menuc" url='{{ a.url }}'
+                                                       href="javascript:void(0)">{{ a.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {#                    <li>#}
+                    {#                        <a class="menuc" url="{% url 'main' %}" href="javascript:void(0)">#}
+                    {#                            <i class="icon-home home-icon"></i>#}
+                    {#                            <span class="menu-text"> 首页 </span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a href="javascript:void(0)">菜单<span class="fa arrow"></span></a>#}
+                    {#                        <ul class="nav nav-second-level">#}
+                    {#                            <li><a class="menuc" url="{% url 'mongodb_add' %}" href="javascript:void(0)">添加信息</a></li>#}
+                    {#                            <li><a class="menuc" url="{% url 'mongodb_query' %}" href="javascript:void(0)">查询信息</a></li>#}
+                    {#                            <li><a class="menuc" url="{% url 'weight_run' %}" href="javascript:void(0)">折线图</a></li>#}
+                    {#                        </ul>#}
+                    {#                        <!-- /.nav-second-level -->#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a class="menuc" url="{% url 'statistics' %}" href="javascript:void(0)">#}
+                    {#                            <span class="menu-text"> QQ在线人数 </span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a class="menuc" url="{% url 'ad_content' %}" href="javascript:void(0)">#}
+                    {#                            <span class="menu-text"> 表格显示 </span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {#                    <li>#}
+                    {#                        <a class="menuc" url="{% url 'menu' %}" href="javascript:void(0)">#}
+                    {#                            <span class="menu-text"> 角色菜单 </span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+{#                    {% if user_type == 1 %}#}
+{#                        <li>#}
+{#                            <a href="{% url 'index1' %}">#}
+{#                                <i class="fa fa-tablet"></i>#}
+{#                                <span class="menu-text"> Bootstrap </span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    {% endif %}#}
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <iframe src="{% url 'main' %}" marginheight="0" marginwidth="0" frameborder="0"
+                scrolling="yes" width="100%" height="100%" id="iframe-id" name="iframe_name"
+                onLoad="iFrameHeight()"></iframe>
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+<script src="{% static 'sbadmin/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'sbadmin/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sbadmin/bower_components/metisMenu/dist/metisMenu.min.js' %}"></script>
+<script src="{% static 'sbadmin/dist/js/sb-admin-2.js' %}"></script>
+
+<!--左边菜单控制切换右侧内容js-->
+<script>
+    $(document).ready(function (e) {
+        $(".menuc").click(function () {
+            var url = $(this).attr("url");
+            $("#iframe-id").attr({'src': url});
+        })
+    });
+</script>
+
+<!--iframe自适应内容高度js-->
+<script>
+    function iFrameHeight() {
+        var ifm = document.getElementById("iframe-id");
+        var subWeb = document.frames ? document.frames["iframe_name"].document : ifm.contentDocument;
+        if (ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.scrollHeight;
+        }
+    }
+</script>
+</body>
+</html>

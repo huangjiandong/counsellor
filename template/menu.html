@@ -1,0 +1,160 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>角色菜单</title>
+    <link rel="stylesheet" href="{% static 'menu/css/demo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'menu/css/zTreeStyle/zTreeStyle.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.4.0/css/font-awesome.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/jquery-2.0.0.js' %}"></script>
+    <script type="text/javascript" src="{% static 'menu/js/jquery.ztree.core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'menu/js/jquery.ztree.excheck.js' %}"></script>
+    <!--
+    <script type="text/javascript" src="../../../js/jquery.ztree.exedit.js"></script>
+    -->
+    <SCRIPT type="text/javascript">
+        <!--
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        var zNodes = [];
+        {% for i in all_menu %}
+            {% if i.id in menu %}
+                {% if i.pid == 0 %}
+                    var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}', open: true, checked: true};
+                {% else %}
+                    var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}', checked: true};
+                {% endif %}
+            {% else %}
+                {% if i.pid == 0 %}
+                    var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}', open: true};
+                {% else %}
+                    var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}'};
+                {% endif %}
+            {% endif %}
+
+            zNodes.push(asd);
+        {% endfor %}
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+        //-->
+    </SCRIPT>
+    <style type="text/css">
+        body {
+            min-height: 550px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="col-xs-12 col-sm-8 col-md-4 filter-input">
+    <select class="form-control" id="user-type">
+        {% for i in menu_role %}
+            <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="content_wrap">
+    <div class="zTreeDemoBackground">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <br>
+</div>
+<div>
+    <button class="btn btn-primary btn-user-menu" id="btnMenu"><i class="fa fa-check-circle"></i> 保存</button>
+</div>
+<script>
+    $('#btnMenu').click(function () {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");     //获取到整个树对象，从而使用具体方法对其进行操作
+        var menu_check = '';
+        var checked = treeObj.getCheckedNodes(true);   // 被勾选节点的集合
+        var user_type = $('#user-type option:selected').val();  // 下拉菜单，获取user_type
+        for (var i = 0; i < checked.length; i++) {
+            if (i == 0) {
+                menu_check += checked[i].id;                   // menu_check 为选择节点集合的 id
+            }
+            else {
+                menu_check += ',' + checked[i].id;                   // menu_check 为选择节点集合的 id
+            }
+        }
+        {#        for (var k = 0; k < zNodes.length; k++) {#}
+        {#            for (var j = 0; j < menu_check.length; j++) {#}
+        {#                if (zNodes[k]['id'] == menu_check[j]) {#}
+        {#                    zNodes[k].checked = true;#}
+        {#                }#}
+        {#            }#}
+        {#        }#}
+
+        $.ajax({
+            url: location.href,
+            {#            data: {type: 'ask', "menu": JSON.stringify(zNodes)},#}
+            data: {'type': 'ask', 'asd': menu_check, 'user_type': user_type},
+            type: 'POST',
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 0) {
+                    alert("保存成功！");
+                } else {
+                    alert(data.error);
+                }
+            },
+            error: function () {
+                alert('操作失败');
+            }
+        });
+    });
+    //绑定下拉菜单改变事件
+    $("#user-type").change(function () {
+        var user_type = $('#user-type option:selected').val();  // 下拉菜单，获取user_type
+        $.ajax({
+            url: location.href,
+            type: "POST",
+            data: {user_type: user_type},
+            dataType: "json",//不加这行后台传过来的json字符串无法转成json对象
+            success: function (data) {
+                var zNodes = [];
+                {% for i in all_menu %}
+                    var temp_id = {{ i.id }};
+                    if (data.data.indexOf(temp_id) != -1) {
+                        {% if i.pid == 0 %}
+                            var asd = {
+                                id: '{{ i.id }}',
+                                pId: '{{ i.pid }}',
+                                name: '{{ i.name }}',
+                                open: true,
+                                checked: true
+                            };
+                        {% else %}
+                            var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}', checked: true};
+                        {% endif %}
+                    }
+                    else {
+                        {% if i.pid == 0 %}
+                            var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}', open: true};
+                        {% else %}
+                            var asd = {id: '{{ i.id }}', pId: '{{ i.pid }}', name: '{{ i.name }}'};
+                        {% endif %}
+                    }
+                    zNodes.push(asd);
+                {% endfor %}
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            },
+            error: function (res) {
+            }
+        })
+    });
+</script>
+</body>
+</html>
