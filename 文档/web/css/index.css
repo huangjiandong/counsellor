@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* reset */
+body,h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,pre,form,input,textarea,th,td,select{margin:0;padding:0;}
+em{font-style:normal}
+li{list-style:none}
+/*a{text-decoration:none;color: #333333;}*/
+a{ text-decoration:none; color:#333;  }
+        a:hover{ color:#3364A5;  }
+
+img{border:none; vertical-align:top;}
+table{border-collapse:collapse;}
+textarea{ resize:none;overflow:auto;}
+
+.title_color{color: #fff;}
+/* end reset */
+
+/* public */
+body{ background:url(../img/bg.gif) repeat-x #d9e2ce; min-width:960px;}
+.wrap{width:960px;margin:0 auto;}
+#header{background:url(../img/head_bg1.jpg) no-repeat center 0;}
+.header{height:94px;}
+#nav{height:43px;background:url(../img/nav_bg.png) no-repeat;}
+#nav li{float:left;width:118px;padding-right:8px; position:relative;}
+#nav a{ display:block;padding-top:1px;line-height:42px; font-size:16px;color:#fdfbf9; text-align:center; background:url(../img/nav_hover.png) no-repeat center 50px;}
+#nav a:hover,#nav .active{background-position:center 0;}
+
+#main{margin-top: 10px;background-color: #fff;height: 870px;}
+.left_up{width:100%;height: 300px;}
+.slide_pic{width: 50%;height:298px;display: inline-block;float: left;}
+.left_left{width: 50%;height:298px;;display: inline-block;  }
+/*.up_left_title{ height:30px; line-height:30px; background:#3364A5; padding:0 10px 0 20px;  position:relative; width: 98%; }
+.up_left_content  .content{width:60%;float: left; margin-left: 3%;}
+.up_left_content .content_time{width: 35%;float: left;}
+.content li{margin: 8px 0}
+.content li a:hover{color: blue;}
+.content_time li{margin: 8px 0}*/
+
+.left{display: inline-block;width: 78%;float: left;}
+.right{display:inline-block; width: 21%;float: left;}
+
+
+.left_middle{float: left;width: 100% ;}
+.middle_left{float:left;width: 50%;height: 290px;}
+.middle_right{float:left;width: 50%;height: 290px;}
+
+
+
+.left_bottom{float: left;width: 100% ;}
+.bottom_left {float:left;width: 50%;height: 290px;}
+.bottom_right{float:left;width: 50%;height: 290px;}
+
+.right_middle {margin:0 auto;  width:210px; overflow:hidden; position:relative;  border:1px solid #ccc; }
+.right_middle h4{height: 25px;padding:10px 0 0 8px;}
+.right_middle li{overflow:hidden;  height:26px;  padding:0 10px;}
+
+
+
+/*辅导员风采*/
+
+        .picScroll-top{ margin:0 auto;  width:210px;  overflow:hidden; position:relative;  border:1px solid #ccc;   }
+        .picScroll-top .hd{ overflow:hidden;  height:30px; background:#3364A5; padding:0 10px;line-height: 30px; }
+        .picScroll-top .hd .prev,.picScroll-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 -100px no-repeat;}
+        .picScroll-top .hd .next{ background-position:0 -140px;  }
+        .picScroll-top .hd .prevStop{ background-position:-60px -100px;  }
+        .picScroll-top .hd .nextStop{ background-position:-60px -140px;  }
+        .picScroll-top .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px; zoom:1; }
+        .picScroll-top .hd ul li{ float:left;  width:9px; height:9px; overflow:hidden; margin-right:5px; text-indent:-999px; cursor:pointer; background:url("images/icoCircle.gif") 0 -9px no-repeat; }
+        .picScroll-top .hd ul li.on{ background-position:0 0; }
+        .picScroll-top .bd{ padding:10px;   }
+        .picScroll-top .bd ul{ overflow:hidden; zoom:1; }
+        .picScroll-top .bd ul li{ text-align:center; zoom:1; }
+        .picScroll-top .bd ul li .pic{ text-align:center; }
+        .picScroll-top .bd ul li .pic img{ width:180px; height:90px; display:block;  padding:2px; border:1px solid #ccc; }
+        .picScroll-top .bd ul li .pic a:hover img{ border-color:#999;  }
+        .picScroll-top .bd ul li .title{ line-height:24px; }
+
+
+
+
+        /* 通知公告css */
+        .slideTxtBox{ width:100%; border:1px solid #ddd; text-align:left;  }
+        .slideTxtBox .hd{ height:30px; line-height:30px; background:#3364A5; padding:0 10px 0 20px;   border-bottom:1px solid #ddd;  position:relative; }
+        .slideTxtBox .hd ul{ float:left; position:absolute; left:20px; top:-1px; height:32px;   }
+        .slideTxtBox .hd ul li{ float:left; padding:0 15px; cursor:pointer;  }
+        .slideTxtBox .hd ul li.on{ height:30px;  background:#fff; border:1px solid #ddd; border-bottom:2px solid #fff; }
+        .slideTxtBox .bd ul{ padding:15px;  zoom:1;  }
+        .slideTxtBox .bd li{ height:24px; line-height:24px;   }
+        .slideTxtBox .bd li .date{ float:right; color:#999;  }
+
+        /* 下面是前/后按钮代码，如果不需要删除即可 */
+        .slideTxtBox .arrow{  position:absolute; right:10px; top:0; }
+        .slideTxtBox .arrow a{ display:block;  width:5px; height:9px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 0 no-repeat; }
+        .slideTxtBox .arrow .next{ background-position:0 -50px;  }
+        .slideTxtBox .arrow .prevStop{ background-position:-60px 0; }
+        .slideTxtBox .arrow .nextStop{ background-position:-60px -50px; }
+
+
+        /* 最新动态css   教学文件*/
+
+        .txtScroll-top{ overflow:hidden; position:relative;  border:1px solid #ccc;   }
+        .txtScroll-top .hd{ overflow:hidden;  height:30px; background:#3364A5; padding:0 10px; line-height: 30px; }
+        .txtScroll-top .hd .prev,.txtScroll-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 -100px no-repeat;}
+        .txtScroll-top .hd .next{ background-position:0 -140px;  }
+        .txtScroll-top .hd .prevStop{ background-position:-60px -100px;  }
+        .txtScroll-top .hd .nextStop{ background-position:-60px -140px;  }
+        .txtScroll-top .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px; }
+        .txtScroll-top .hd ul li{ float:left;  width:9px; height:9px; overflow:hidden; margin-right:5px; text-indent:-999px; cursor:pointer; background:url("../images/icoCircle.gif") 0 -9px no-repeat; }
+        .txtScroll-top .hd ul li.on{ background-position:0 0; }
+        .txtScroll-top .bd{ padding:15px;  }
+        .txtScroll-top .infoList li{ height:24px; line-height:24px;   }
+        .txtScroll-top .infoList li .date{ float:right; color:#999;  }
+
+
+/* 图片滚动css */
+        .picScroll-left{ width:100%;  overflow:hidden; position:relative;  border:1px solid #ccc;   }
+        .picScroll-left .hd{ overflow:hidden;  height:30px; background:#3364A5; padding:0 10px;  line-height: 30px;}
+        .picScroll-left .hd .prev,.picScroll-left .hd .next{ display:block;  width:5px; height:9px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") no-repeat;}
+        .picScroll-left .hd .next{ background-position:0 -50px;  }
+        .picScroll-left .hd .prevStop{ background-position:-60px 0; }
+        .picScroll-left .hd .nextStop{ background-position:-60px -50px; }
+        .picScroll-left .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px; zoom:1; }
+        .picScroll-left .hd ul li{ float:left;  width:9px; height:9px; overflow:hidden; margin-right:5px; text-indent:-999px; cursor:pointer; background:url("images/icoCircle.gif") 0 -9px no-repeat; }
+        .picScroll-left .hd ul li.on{ background-position:0 0; }
+        .picScroll-left .bd{ padding:10px;   }
+        .picScroll-left .bd ul{ overflow:hidden; zoom:1; }
+        .picScroll-left .bd ul li{ margin:0 8px; float:left; _display:inline; overflow:hidden; text-align:center;  }
+        .picScroll-left .bd ul li .pic{ text-align:center; }
+        .picScroll-left .bd ul li .pic img{ width:100%; height:150px; display:block;  padding:2px; border:1px solid #ccc; }
+        .picScroll-left .bd ul li .pic a:hover img{ border-color:#999;  }
+        .picScroll-left .bd ul li .title{ line-height:24px;   }
+       .pageState{color: #fff;}
+
+
+        /* 经验交流css */
+        .txtMarquee-top{ width:100%;  overflow:hidden; position:relative;  border:1px solid #ccc;   }
+        .txtMarquee-top .hd{ overflow:hidden;  height:30px; background:#3364A5; padding:0 10px; line-height: 30px; }
+        .txtMarquee-top .hd .prev,.txtMarquee-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 -100px no-repeat;}
+        .txtMarquee-top .hd .next{ background-position:0 -140px;  }
+        .txtMarquee-top .hd .prevStop{ background-position:-60px -100px;  }
+        .txtMarquee-top .hd .nextStop{ background-position:-60px -140px;  }
+        .txtMarquee-top .bd{ padding:15px;  }
+        .txtMarquee-top .infoList li{ height:24px; line-height:24px;   }
+        .txtMarquee-top .infoList li .date{ float:right; color:#999;  }
+
+
+/* end public */
+
+/* index(i) */
+
+/* end index */
+
+/* room(r) */
+
+/* end room */
+
+
+/* product(p)  */
+
+/* end product*/

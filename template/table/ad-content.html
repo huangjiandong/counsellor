@@ -6,7 +6,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
     <meta content="yes" name="apple-touch-fullscreen"/>
-    <title>QQ在线人数</title>
+    <title>后台管理</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
     <meta content="telephone=no,email=no" name="format-detection"/>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
@@ -175,31 +175,33 @@
 <script src="{% static 'mmGrid/mmGrid.js' %}"></script>
 <script src="{% static 'mmGrid/mmPaginator.js' %}"></script>
 <script src="{% static 'js/mmGrid-adaptor.js' %}"></script>
-{#  解决IE8的js新特性兼容问题  #}
-<script src="{% static 'uikit-2.17.0/js/es5-shim.min.js' %}"></script>
-<script src="{% static 'uikit-2.17.0/js/core/core.min.js' %}"></script>
-<script src="{% static 'uikit-2.17.0/js/core/modal.min.js' %}"></script>
-<script src="{% static 'uikit-2.17.0/js/components/lightbox.min.js' %}"></script>
-
 <script>
     var url = {
         ad_content: "{% url 'ad_content' %}",
         ad_content_delete: "{% url 'ad_content_delete' %}"
     };
     var cols = [
+{#        {#}
+{#            title: "ID",#}
+{#            name: '_id',#}
+{#            align: 'center',#}
+{#            renderer: function (val, item) {#}
+{#                return createGridHtml(item._id);#}
+{#            }#}
+{#        },#}
         {
-            title: "ID",
-            name: '_id',
+            title: "标题",
+            name: 'new_title',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item._id);
+                return createGridHtml(item.new_title);
             }
-        }, {
-            title: "在线人数",
-            name: 'online_number',
+        },{
+            title: "内容",
+            name: 'new_content',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.online_number);
+                return createGridHtml(item.new_content);
             }
         }, {
             title: '当前时间',

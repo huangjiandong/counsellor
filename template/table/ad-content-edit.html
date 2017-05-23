@@ -5,14 +5,11 @@
     <title>数据{{ title }}</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
-    <link rel="stylesheet" href="{% static 'font-awesome-4.4.0/css/font-awesome.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/mmGrid.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/mmPaginator.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
-    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/uikit.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/components/form-file.css' %}"/>
     <style>
         .ui-btn-back {
             margin-bottom: 15px;
@@ -100,29 +97,21 @@
                           class="form-horizontal" style="padding: 20px 0;">
                         <input type="hidden" name="action" value="{{ action }}">
                         {% if action == "add" %}
-                            <ul class="nav nav-tabs">
-                                <li class="active" id="li_img"><a id="tab1" data-toggle="tab" style="border-left: transparent;"
-                                                      onclick="setDisplayImage()">时间</a>
-                                </li>
-                                <li id="li_video"><a id="tab2" data-toggle="tab" onclick="setDisplayVideo()">人数</a></li>
-                            </ul>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-7" style="color: blue;">时间和在线都必须填写</div>
+                                <div class="col-sm-7" style="color: blue;">标题和内容都必须填写</div>
                             </div>
                             <div id="image_add">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">在线人数</label>
+                                    <label class="col-sm-2 control-label">标题</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="online_number" id="online_number" value="">
+                                        <input type="text" class="form-control" name="new_title" id="new_title" value="">
                                     </div>
                                 </div>
-                            </div>
-                            <div id="video_add">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">当前时间</label>
+                                    <label class="col-sm-2 control-label">内容</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="system_time" id="system_time" value="">
+                                        <textarea type="text" class="form-control" name="new_content" id="new_content"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,22 +120,28 @@
                                 <div class="col-sm-7 error-info" style="color: red;"></div>
                             </div>
                         {% elif action == "edit" %}
-                            <div class="form-group">
+                            <div class="form-group" hidden>
                                 <label class="col-sm-2 control-label">ID</label>
                                 <div class="col-sm-7">
                                     <input type="text" class="form-control" name="_id" id="_id" value="{{ content.id}}" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">在线人数</label>
+                                <label class="col-sm-2 control-label">标题</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="online_number" id="online_number" value="{{ content.online_number }}">
+                                    <input type="text" class="form-control" name="new_title" id="new_title" value="{{ content.new_title }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">当前时间</label>
+                                <label class="col-sm-2 control-label">内容</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="system_time" id="system_time" value="{{ system_time}}" readonly>
+                                    <textarea type="text" class="form-control" name="new_content" id="new_content">{{ content.new_content}}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">时间</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" name="system_time" id="system_time" value="{{ content.system_time }}" readonly>
                                 </div>
                             </div>
                         {% endif %}
@@ -162,10 +157,6 @@
         </div>
     </section>
 
-    <!-- 模态对话框 -->
-    <div id="my-id" class="uk-modal">
-        <img src="{% static 'img/ajax-loader.gif' %}">
-    </div>
     </aside>
 </div>
 <div class="notifications bottom-right"></div>
@@ -173,23 +164,6 @@
     <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
     <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
     <script src="{% static 'js/common.min.js' %}"></script>
-    <script src="{% static 'uikit-2.17.0/js/es5-shim.min.js' %}"></script>
-    <script src="{% static 'uikit-2.17.0/js/core/core.min.js' %}"></script>
-    <script src="{% static 'uikit-2.17.0/js/core/modal.min.js' %}"></script>
-    <script>
-        function setDisplayImage() {
-            document.getElementById("image_add").style.display = "block";
-            document.getElementById("video_add").style.display = "none";
-            document.getElementById('li_img').className = 'active';
-            document.getElementById('li_video').className = '';
-        }
-        function setDisplayVideo() {
-            document.getElementById("image_add").style.display = "none";
-            document.getElementById("video_add").style.display = "block";
-            document.getElementById('li_img').className = '';
-            document.getElementById('li_video').className = 'active';
-        }
-    </script>
     <script>
         var action = '{{ action }}';
         var api_url = {
@@ -206,18 +180,20 @@
                 var args = {};
                 var _id = $("input[name='_id']").val();
                 args._id = _id;
+                var new_content = $("#new_content").val();
+                if (new_content==''){
+                    $(".error-info").text("内容不可为空！");
+                    return false;
+                }
+                args.new_content = new_content;
                 var system_time = $("input[name='system_time']").val();
-                if (system_time==''){
-                    $(".error-info").text("当前时间不可为空！");
-                    return false;
-                }
                 args.system_time = system_time;
-                var online_number = $("input[name='online_number']").val();
-                if (online_number == '') {
-                    $(".error-info").text("在线人数不可为空！");
+                var new_title = $("input[name='new_title']").val();
+                if (new_title == '') {
+                    $(".error-info").text("标题不可为空！");
                     return false;
                 }
-                args.online_number = online_number;
+                args.new_title = new_title;
                 args.action = action;
                 $.post(api_url.ad_content_edit, args, function (data) {
                     if (data.status == 0) {

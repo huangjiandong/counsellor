@@ -45,7 +45,7 @@ def init_message():
         "INSERT INTO `ebf_role` VALUES ('3', '1');",
         "INSERT INTO `ebf_role` VALUES ('4', '1,2');",
         "INSERT INTO `ebf_url` VALUES ('1', 'main', '首页', '', '0', '2');",
-        "INSERT INTO `ebf_url` VALUES ('2', 'ad_content', '表格显示', null, '0', '2');",
+        "INSERT INTO `ebf_url` VALUES ('2', 'ad_content', '后台管理', null, '0', '2');",
         "INSERT INTO `ebf_url` VALUES ('3', 'menu', '角色菜单', null, '0', '2');",
     ]
     conn = MysqlHandler().conn

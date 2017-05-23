@@ -126,7 +126,7 @@ def select_ad_content(_id, min_date, max_date, field='system_time', order=-1, sk
     """
     try:
         db = get_db()
-        collection = db.ebf_qq
+        collection = db.ebf_content
         params = dict()
         if min_date and max_date:
             date_range = {'$gte': min_date, '$lte': max_date}

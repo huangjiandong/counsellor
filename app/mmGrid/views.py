@@ -57,33 +57,36 @@ def ad_content_edit(request):
             _id = ObjectId(request.GET.get('_id'))
 
             db = get_db()
-            content = db.ebf_qq.find_one({'_id': _id})
-            system_time = utc2local(content['system_time']).strftime("%Y-%m-%d %H:%M:%S")
+            content = db.ebf_content.find_one({'_id': _id})
             content = {key.strip('_'): str(value) for key, value in content.items()}
             return render(request, 'table/ad-content-edit.html', locals())
 
     elif request.method == 'POST':
         try:
             if action == 'add':
-                system_time = request.POST.get('system_time', None)
-                online_number = request.POST.get('online_number', None)
+                new_content = request.POST.get('new_content', None)
+                new_title = request.POST.get('new_title', None)
                 content = {
-                    'online_number': online_number,
-                    'system_time': system_time
+                    'new_title': new_title,
+                    'new_content': new_content,
+                    'system_time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
                 db = get_db()
-                posts = db.ebf_qq
+                posts = db.ebf_content
                 posts.insert(content)
                 return HttpResponse(json.dumps({"status": 0}))
             elif action == 'edit':
                 _id = request.POST.get('_id', None)
-                online_number = request.POST.get('online_number', None)
+                new_title = request.POST.get('new_title', None)
+                new_content = request.POST.get('new_content', None)
+                system_time = request.POST.get('system_time', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 content = {
-                    'online_number': online_number,
-                    'system_time': datetime.datetime.utcnow()
+                    'new_title': new_title,
+                    'new_content': new_content,
+                    'system_time': system_time
                 }
                 db = get_db()
-                posts = db.ebf_qq
+                posts = db.ebf_content
                 _id = ObjectId(_id)
                 posts.update({"_id": _id}, content)
                 return HttpResponse(json.dumps({"status": 0}))
@@ -108,11 +111,11 @@ def ad_content_delete(request):
         if _id:
             try:
                 db = get_db()
-                pos = db.ebf_qq.find_one({'_id': _id})
+                pos = db.ebf_content.find_one({'_id': _id})
                 if pos is None:
                     return HttpResponse(json.dumps({"status": -1}))
                 else:
-                    db.ebf_qq.remove({"_id": pos["_id"]})
+                    db.ebf_content.remove({"_id": pos["_id"]})
                 return HttpResponse(json.dumps({"status": 0}))
             except Exception as e:
                 print(e)
@@ -130,9 +133,8 @@ def content_detail(request, num_id):
     """
     try:
         db = get_db()
-        results = db.ebf_qq.find_one({'_id': ObjectId(num_id)})
+        results = db.ebf_content.find_one({'_id': ObjectId(num_id)})
         if results:
-            results['system_time'] = utc2local(results['system_time']).strftime("%Y-%m-%d %H:%M:%S")
             message = None
         else:
             message = '没有数据'
