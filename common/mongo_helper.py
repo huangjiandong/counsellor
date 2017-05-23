@@ -111,7 +111,7 @@ def wrap_model(results, keys=None):
     return items
 
 
-def select_ad_content(_id, min_date, max_date, field='system_time', order=-1, skip=0, limit=20):
+def select_ad_content(_id, new_type, min_date, max_date, field='system_time', order=-1, skip=0, limit=20):
     """
 
     查询数据
@@ -133,6 +133,8 @@ def select_ad_content(_id, min_date, max_date, field='system_time', order=-1, sk
             params['system_time'] = date_range
         if _id:
             params['_id'] = ObjectId(_id)
+        if new_type:
+            params['new_type'] = ObjectId(new_type)
         results = collection.find(params)
         results.sort(field, order).skip(skip).limit(limit)
         count = results.count()

@@ -105,12 +105,12 @@
 <header class="header">
     <section class="content-header">
         <h1>
-            表格
-            <small>在线人数</small>
+            后台
+            <small>后台管理</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{% url 'main' %}">首页</a></li>
-            <li class="active">在线人数</li>
+            <li class="active">后台管理</li>
         </ol>
     </section>
 </header>
@@ -137,6 +137,13 @@
                                     <div class="form-group col-md-2">
                                         <input type="text" class="form-control" placeholder="请输入ID"
                                                id="content-id"/>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <select class="form-control" name="factory">
+                                            <option value="0">--类型--</option>
+                                            <option value="1">公告</option>
+                                            <option value="2">新闻</option>
+                                        </select>
                                     </div>
                                     <input type="button" value="筛选" id="btnFilter" class="btn btn-primary"/>
                                     <a href="{% url 'ad_content_edit' %}?action=add" id="btn-add-commodity"
@@ -197,6 +204,13 @@
                 return createGridHtml(item.new_title);
             }
         },{
+            title: "类型",
+            name: 'new_type',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item.new_type);
+            }
+        },{
             title: "内容",
             name: 'new_content',
             align: 'center',
@@ -244,11 +258,15 @@
                 var dateRange = $("#reservation").val();
                 // 数据id
                 var content_id = $("#content-id").val();
+                var new_type = $("select[name='factory']").val();
                 if (!isNull(content_id)) {
                     obj._id = content_id;
                 }
                 if (!isNull(dateRange)) {
                     obj.dateRange = dateRange;
+                }
+                if (!isNull(new_type)) {
+                    obj.new_type = new_type;
                 }
                 return obj
             }
