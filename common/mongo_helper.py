@@ -1,7 +1,6 @@
 # coding=utf-8
 import datetime
 import logging
-
 from bson import ObjectId
 from pymongo import MongoClient
 from django.db import models
@@ -111,11 +110,12 @@ def wrap_model(results, keys=None):
     return items
 
 
-def select_ad_content(_id, new_type, min_date, max_date, field='system_time', order=-1, skip=0, limit=20):
+def select_ad_content(new_title, new_type, min_date, max_date, field='system_time', order=-1, skip=0, limit=20):
     """
 
     查询数据
-    :param _id:
+    :param new_title:
+    :param new_type:
     :param min_date:
     :param max_date:
     :param field:
@@ -131,10 +131,12 @@ def select_ad_content(_id, new_type, min_date, max_date, field='system_time', or
         if min_date and max_date:
             date_range = {'$gte': min_date, '$lte': max_date}
             params['system_time'] = date_range
-        if _id:
-            params['_id'] = ObjectId(_id)
-        if new_type:
-            params['new_type'] = ObjectId(new_type)
+        # if _id:
+        #     params['_id'] = ObjectId(_id)
+        if new_title:
+            params['new_title'] = new_title
+        if new_type and new_type != '0':
+            params['new_type'] = new_type
         results = collection.find(params)
         results.sort(field, order).skip(skip).limit(limit)
         count = results.count()

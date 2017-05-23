@@ -135,11 +135,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <input type="text" class="form-control" placeholder="请输入ID"
+                                        <input type="text" class="form-control" placeholder="请输入标题"
                                                id="content-id"/>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <select class="form-control" name="factory">
+                                        <select class="form-control col-md-2" name="factory">
                                             <option value="0">--类型--</option>
                                             <option value="1">公告</option>
                                             <option value="2">新闻</option>
@@ -257,16 +257,16 @@
                 // 时间段
                 var dateRange = $("#reservation").val();
                 // 数据id
-                var content_id = $("#content-id").val();
-                var new_type = $("select[name='factory']").val();
-                if (!isNull(content_id)) {
-                    obj._id = content_id;
+                var new_title = $("#content-id").val();
+                var content_type = $("select[name='factory']").val();
+                if (!isNull(new_title)) {
+                    obj.new_title = new_title;
                 }
                 if (!isNull(dateRange)) {
                     obj.dateRange = dateRange;
                 }
-                if (!isNull(new_type)) {
-                    obj.new_type = new_type;
+                if (!isNull(content_type)) {
+                    obj.new_type = content_type;
                 }
                 return obj
             }

@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from common.utils import login_required
 from common.mongo_helper import mmgrid_decorator, select_ad_content, get_db
-from common.utils import UTC2LocalEncoder, utc2local
+from common.utils import UTC2LocalEncoder
 from audioop import reverse
 
 
@@ -29,12 +29,12 @@ def ad_content(request, skip=0, limit=20, field='system_time', order=-1, **kwarg
         return render(request, 'table/ad-content.html', locals())
     if request.method == 'POST':
         # 查询条件
-        _id = kwargs.get('_id')
+        new_title = kwargs.get('new_title')
         new_type = kwargs.get('new_type')
         # 上传时间段
         min_date = kwargs.get('min_date')
         max_date = kwargs.get('max_date')
-        results = select_ad_content(_id, new_type, min_date, max_date, field, order, skip, limit)
+        results = select_ad_content(new_title, new_type, min_date, max_date, field, order, skip, limit)
         return JsonResponse(results, encoder=UTC2LocalEncoder)
 
 
