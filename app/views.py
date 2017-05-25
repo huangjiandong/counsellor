@@ -65,6 +65,7 @@ def login(request):
             pwd += username
             # 再次加密进行验证
             password = set_password(pwd)
+            print("用户名： {}， 密码：{}, 加密后密码：{}".format(username, pwd, password))
             # 获取的表单数据与数据库进行比较
             user = User.objects.filter(username__exact=username, password__exact=password)
             if user:

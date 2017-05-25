@@ -93,6 +93,7 @@ var Captcha = function Captcha(w, h) {
     ctx.stroke();
     // 生成的验证码
     window.code = vcode.toLowerCase();
+    console.log("验证码：" + vcode.toLowerCase());
     return {
         dataURL: canvas.toDataURL()
     };
