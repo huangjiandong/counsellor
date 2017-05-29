@@ -135,24 +135,18 @@
                                                id="content-id"/>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <select class="form-control col-md-2" name="factory">
+                                        <select class="form-control" name="factory">
                                             <option value="">--类型--</option>
                                             <option value="1">公告</option>
-                                            <option value="2">新闻</option>
+                                            <option value="2">教学文件</option>
+                                            <option value="3">经验交流</option>
+                                            <option value="4">通知</option>
+                                            <option value="5">学术期刊</option>
                                         </select>
                                     </div>
                                     <input type="button" value="筛选" id="btnFilter" class="btn btn-primary"/>
                                     <a href="{% url 'ad_content_edit' %}?action=add" id="btn-add-commodity"
                                        class="btn btn-primary btn-right">添加数据</a>
-                                </div>
-                                <div class="table-top-style">
-                                    <button class="btn btn-primary" id="btnAuditPass" disabled="disabled"><i
-                                            class="fa fa-check-circle"></i>通过
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <button class="btn btn-danger" id="btnAuditFail" disabled="disabled"><i
-                                            class="fa fa-times"></i>拒绝
-                                    </button>
                                 </div>
                                 <table id="table6-1"></table>
                                 <div class="table-paginator">
@@ -184,37 +178,47 @@
         ad_content_delete: "{% url 'ad_content_delete' %}"
     };
     var cols = [
-{#        {#}
-{#            title: "ID",#}
-{#            name: '_id',#}
-{#            align: 'center',#}
-{#            renderer: function (val, item) {#}
-{#                return createGridHtml(item._id);#}
-{#            }#}
-{#        },#}
         {
             title: "标题",
-            name: 'new_title',
+            name: 'title_title',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.new_title);
-            }
-        },{
-            title: "类型",
-            name: 'new_type',
-            align: 'center',
-            renderer: function (val, item) {
-                return createGridHtml(item.new_type);
-            }
-        },{
-            title: "内容",
-            name: 'new_content',
-            align: 'center',
-            renderer: function (val, item) {
-                return createGridHtml(item.new_content);
+                return createGridHtml(item.title_title);
             }
         }, {
-            title: '当前时间',
+            title: "类型",
+            name: 'type_type',
+            align: 'center',
+            renderer: function (val, item) {
+                var type_type = item.type_type;
+                if (type_type == "1" ){
+                    return "公告";
+                }
+                else if (type_type == "2" ){
+                    return "教学文件";
+                }
+                else if (type_type == "3" ){
+                    return "经验交流";
+                }
+                else if (type_type == "4" ){
+                    return "通知";
+                }
+                else if (type_type == "5" ){
+                    return "学术期刊";
+                }
+                else{
+                    return "未知";
+                }
+            }
+        }, {
+            title: "内容",
+            name: 'content_content',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item.content_content);
+            }
+        }, {
+            title: '创建时间',
             sortable: true,
             name: 'create_time',
             align: 'center',
@@ -253,30 +257,18 @@
                 // 时间段
                 var dateRange = $("#reservation").val();
                 // 数据id
-                var new_title = $("#content-id").val();
+                var title_title = $("#content-id").val();
                 var content_type = $("select[name='factory']").val();
-                if (!isNull(new_title)) {
-                    obj.new_title = new_title;
+                if (!isNull(title_title)) {
+                    obj.title_title = title_title;
                 }
                 if (!isNull(dateRange)) {
                     obj.dateRange = dateRange;
                 }
                 if (!isNull(content_type)) {
-                    obj.new_type = content_type;
+                    obj.type_type = content_type;
                 }
                 return obj
-            }
-        });
-        // 通过、拒绝操作，为checkbox绑定事件
-        $(document).delegate("input[type='checkbox']", "change", function () {
-            //获取选中的数据,不管是否有单选、复选框都有效
-            var rows = mmgrid.selectedRows();
-            if (rows.length > 0) {
-                $("#btnAuditPass").attr("disabled", false);
-                $("#btnAuditFail").attr("disabled", false);
-            } else {
-                $("#btnAuditPass").attr("disabled", true);
-                $("#btnAuditFail").attr("disabled", true);
             }
         });
         return mmgrid;

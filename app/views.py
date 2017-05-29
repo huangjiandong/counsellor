@@ -4,26 +4,45 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from common.helper import login_required
+from common.mongo_helper import get_db
 from common.utils import error, md5_16
-from common.mysql_helper import sql_my_profile, sql_user_type_menu, sql_url_menu, sql_url_id
+from common.mysql_helper import sql_my_profile, sql_user_type_menu, sql_url_menu, sql_url_id, select_all_users
 from common.mysql_helper import sql_menu_role, sql_update_menu_role, sql_update_password, sql_username_password
 from model.user import User
 
 
 def index_main(request):
+    """
+    首页
+    :param request:
+    :return:
+    """
+    db = get_db()
+    objects = db.ebf_content.find()
+    result = {}
+    jinyan = []
+    gonggao = []
+    tongzhi = []
+    wenjian = []
+    xueshu = []
+    for x in objects:
+        # 把'_id'改为'id'
+        r = {key.strip('_'): value for key, value in x.items()}
+        type_type = r["type_type"]
+        if type_type == "1":
+            gonggao.append(r)
+        elif type_type == "2":
+            wenjian.append(r)
+        elif type_type == "3":
+            jinyan.append(r)
+        elif type_type == "4":
+            tongzhi.append(r)
+        elif type_type == "5":
+            xueshu.append(r)
+    users_info = select_all_users(username="", user_type=2, status=1, min_date="", max_date="",
+                                  field="create_time", order=1, skip=0, limit=5)
+    fudaoyaun = [{"nickname": i["nickname"], "upload_head": i["upload_head"]} for i in users_info["items"]]
     return render(request, 'index1.html', locals())
-
-
-def bulletin_board(request):
-    return render(request, 'bulletin_board.html', locals())
-
-
-def message(request):
-    return render(request, 'message.html', locals())
-
-
-def counsellor(request):
-    return render(request, 'counsellor.html', locals())
 
 
 # 注册

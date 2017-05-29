@@ -1,0 +1,87 @@
+@charset "utf-8";
+/* css 重置 */
+		*{margin:0; padding:0; list-style:none; }
+		body{ background:#fff; font:normal 12px/22px 宋体;  }
+		img{ border:0;  }
+		a{ text-decoration:none; color:#333;  }
+		.js{width:90%; margin:10px auto 0 auto; }
+		.js p{ padding:5px 0; font-weight:bold; overflow:hidden;  }
+		.js p span{ float:right; }
+		.js p span a{ color:#f00; text-decoration:underline;   }
+		.js textarea{ height:50px;  width:98%; padding:5px; border:1px solid #ccc; border-top:2px solid #aaa;  border-left:2px solid #aaa;  }
+
+
+/* reset */
+body,h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,pre,form,input,textarea,th,td,select{margin:0;padding:0;}
+em{font-style:normal}
+li{list-style:none}
+/*a{text-decoration:none;color: #333333;}*/
+a{ text-decoration:none; color:#333;  }
+        a:hover{ color:#3364A5;  }
+
+img{border:none; vertical-align:top;}
+table{border-collapse:collapse;}
+textarea{ resize:none;overflow:auto;}
+/* end reset */
+
+/* public */
+body{ background:url(../img/bg.gif) repeat-x #d9e2ce; min-width:960px;}
+.wrap{width:960px;margin:0 auto;}
+#header{background:url(../img/head_bg1.jpg) no-repeat center 0;}
+.header{height:94px;}
+#nav{height:43px;background:url(../img/nav_bg.png) no-repeat;}
+#nav li{float:left;width:118px;padding-right:8px; position:relative;}
+#nav a{ display:block;padding-top:1px;line-height:42px; font-size:16px;color:#fdfbf9; text-align:center; background:url(../img/nav_hover.png) no-repeat center 50px;}
+#nav a:hover,#nav .active{background-position:center 0;}
+
+#main{margin-top: 10px;background-color: #fff;height: 430px;border: 1px solid #ccc;}
+.left{width: 20%;height: 430px;border: 1px solid #ccc;display: inline-block;float: left;background-color: #F2F5F5;}
+.right{width: 74.5%;height: 300px;display: inline-block;float: left;margin-left: 2%;}
+
+.right_top{width: 100%;height: 30px;background: #3364A5;line-height: 30px;}
+.right_top li{ float:left;color: #fff;}
+
+.left_title{width: 91.5%;height: 30px; background:#3364A5; padding:0 10px; line-height: 30px; }
+
+
+
+
+  .txtScroll-top{ overflow:hidden; position:relative;  border:1px solid #ccc;   }
+        .txtScroll-top .hd{ overflow:hidden;  height:30px; background:#B2C2C9; padding:0 10px; line-height: 30px; }
+        .txtScroll-top .hd .prev,.txtScroll-top .hd .next{ display:block;  width:9px; height:5px; float:right; margin-right:5px; margin-top:10px;  overflow:hidden;
+             cursor:pointer; background:url("../images/arrow.png") 0 -100px no-repeat;}
+        .txtScroll-top .hd .next{ background-position:0 -140px;  }
+        .txtScroll-top .hd .prevStop{ background-position:-60px -100px;  }
+        .txtScroll-top .hd .nextStop{ background-position:-60px -140px;  }
+        .txtScroll-top .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px; }
+        .txtScroll-top .hd ul li{ float:left;  width:9px; height:9px; overflow:hidden; margin-right:5px; text-indent:-999px; cursor:pointer; background:url("../images/icoCircle.gif") 0 -9px no-repeat; }
+        .txtScroll-top .hd ul li.on{ background-position:0 0; }
+        .txtScroll-top .bd{ padding:15px;  }
+        .txtScroll-top .infoList li{ height:24px; line-height:24px;   }
+        .txtScroll-top .infoList li .date{ float:right; color:#999;  }
+
+        .page { text-align:center; border:1px solid #cdcdc8; border-top:none;padding-bottom:5px; }
+        .page span{color:#999999;line-height: 20px;}
+	.page a { display:inline-block; height:20px; line-height:20px; padding:0 8px; color:#999999; text-decoration:none; font-size:12px; }
+	.page a:hover, .page .active { color:#fff; background:#3364A5;}
+	.page span { font-family:'宋体'; }
+
+
+		/* 左边css */
+		.sideMen{ width:100%; border:1px solid #ddd;  }
+		.sideMen h3{ height:32px; line-height:32px; padding-left:10px;  border-top:1px solid #e3e3e3; background:#B2C2C9;
+			font:normal 14px/32px "Microsoft YaHei";
+		}
+		.sideMen h3 em{ float:right; display:block; width:40px; height:32px;   background:url(../images/icoAdd.png) 16px 12px no-repeat; cursor:pointer; }
+		.sideMen h3 em.on{ background-position:16px -57px; }
+		.sideMen ul{ padding:8px 25px; color:#999;  }
+
+
+		
+
+.search { width:100%; height:31px;  position: relative;top: 130px;}
+.search .text {  width:70%; height:30px; line-height:30px;font-size:13px; color:#666; outline:none; border-radius: 10px;}
+.search .btn { width:20%; height:30px;  position: relative;border-radius: 5px;color:#666;}
+
+#footer{height:50px;background-color: #B6C5C9;}
+

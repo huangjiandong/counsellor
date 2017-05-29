@@ -276,31 +276,27 @@ def select_all_users(username, user_type, status, min_date, max_date, field, ord
     """
 
     sql = "select username,password,nickname,user_type,upload_head,status,create_time from ebf_account where 1=1"
-    s = "select COUNT(username) from ebf_account where 1=1"
     args = []
     if username:
-        sql += "and username=%s"
-        s += "and username=%s"
+        sql += " and username=%s"
         args.append(username)
-    if user_type and user_type != '0':
-        sql += "and user_type=%s"
-        s += "and user_type=%s"
+    if user_type:
+        sql += " and user_type=%s"
         args.append(user_type)
-    if status != status != '0':
-        sql += "and status=%s"
-        s += "and status=%s"
+    if status:
+        sql += " and status=%s"
         args.append(status)
     if min_date and max_date:
-        sql += "and create_time <= % and create_time > %"
-        s += "and create_time <= % and create_time > %"
-    result = execute_sql(s, args, False)
-    count = result['COUNT(username)'] if result else 0
+        sql += " and create_time <= % and create_time >= %"
+        args.append(min_date)
+        args.append(max_date)
     if order == -1:
-        sql += ' ORDER BY %s  DESC limit %s, %s'
+        sql += " ORDER BY %s  DESC limit %s, %s"
     else:
-        sql += ' ORDER BY %s ASC limit %s, %s'
+        sql += " ORDER BY %s ASC limit %s, %s"
     args.append(field)
     args.append(skip)
     args.append(limit)
     items = execute_sql(sql, args)
+    count = len(items)
     return {"totalCount": count, "items": items}

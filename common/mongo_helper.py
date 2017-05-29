@@ -183,12 +183,12 @@ def convert_local_to_utc(normal, trans=True, fm='%Y-%m-%d'):
         return normal - datetime.timedelta(hours=8)
 
 
-def select_ad_content(new_title, new_type, min_date, max_date, field='create_time', order=-1, skip=0, limit=20):
+def select_ad_content(title_title, type_type, min_date, max_date, field='create_time', order=-1, skip=0, limit=20):
     """
 
     查询数据
-    :param new_title:
-    :param new_type:
+    :param title_title:
+    :param type_type:
     :param min_date:
     :param max_date:
     :param field:
@@ -206,10 +206,10 @@ def select_ad_content(new_title, new_type, min_date, max_date, field='create_tim
             params['create_time'] = date_range
         # if _id:
         #     params['_id'] = ObjectId(_id)
-        if new_title:
-            params['new_title'] = new_title
-        if new_type:
-            params['new_type'] = new_type
+        if title_title:
+            params['title_title'] = title_title
+        if type_type:
+            params['type_type'] = type_type
         results = collection.find(params)
         results.sort(field, order).skip(skip).limit(limit)
         count = results.count()
@@ -220,11 +220,11 @@ def select_ad_content(new_title, new_type, min_date, max_date, field='create_tim
         return {"totalCount": 0, "items": []}
 
 
-def select_messages(message_title, message_type, username, min_date, max_date, field, order, skip, limit):
+def select_messages(title_title, type_type, username, min_date, max_date, field, order, skip, limit):
     """
 
-    :param message_title:
-    :param message_type:
+    :param title_title:
+    :param type_type:
     :param username:
     :param min_date:
     :param max_date:
@@ -241,10 +241,10 @@ def select_messages(message_title, message_type, username, min_date, max_date, f
         if min_date and max_date:
             date_range = {'$gte': min_date, '$lte': max_date}
             params['create_time'] = date_range
-        if message_title:
-            params['message_title'] = message_title
-        if message_type:
-            params['message_type'] = message_type
+        if title_title:
+            params['title_title'] = title_title
+        if type_type:
+            params['type_type'] = type_type
         # 用户类型
         if username:
             params['message_name'] = username

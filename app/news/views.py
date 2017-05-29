@@ -1,7 +1,6 @@
 # !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# 表格
 import datetime
 import json
 import logging
@@ -33,12 +32,12 @@ def ad_content(request, skip=0, limit=20, field='create_time', order=-1, **kwarg
         return render(request, 'news/ad-content.html', locals())
     if request.method == 'POST':
         # 查询条件
-        new_title = kwargs.get('new_title')
-        new_type = kwargs.get('new_type')
+        title_title = kwargs.get('title_title')
+        type_type = kwargs.get('type_type')
         # 上传时间段
         min_date = kwargs.get('min_date')
         max_date = kwargs.get('max_date')
-        results = select_ad_content(new_title, new_type, min_date, max_date, field, order, skip, limit)
+        results = select_ad_content(title_title, type_type, min_date, max_date, field, order, skip, limit)
         return JsonResponse(results, encoder=UTC2LocalEncoder)
 
 
@@ -69,13 +68,13 @@ def ad_content_edit(request):
     elif request.method == 'POST':
         try:
             if action == 'add':
-                new_content = request.POST.get('new_content', None)
-                new_type = request.POST.get('new_type', None)
-                new_title = request.POST.get('new_title', None)
+                content_content = request.POST.get('content_content', None)
+                type_type = request.POST.get('type_type', None)
+                title_title = request.POST.get('title_title', None)
                 content = {
-                    'new_title': new_title,
-                    'new_content': new_content,
-                    'new_type': new_type,
+                    'title_title': title_title,
+                    'content_content': content_content,
+                    'type_type': type_type,
                     'create_time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
                 db = get_db()
@@ -84,14 +83,14 @@ def ad_content_edit(request):
                 return HttpResponse(json.dumps({"status": 0}))
             elif action == 'edit':
                 _id = request.POST.get('_id', None)
-                new_title = request.POST.get('new_title', None)
-                new_content = request.POST.get('new_content', None)
-                new_type = request.POST.get('new_type', None)
+                title_title = request.POST.get('title_title', None)
+                content_content = request.POST.get('content_content', None)
+                type_type = request.POST.get('type_type', None)
                 create_time = request.POST.get('create_time', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 content = {
-                    'new_title': new_title,
-                    'new_content': new_content,
-                    'new_type': new_type,
+                    'title_title': title_title,
+                    'content_content': content_content,
+                    'type_type': type_type,
                     'create_time': create_time
                 }
                 db = get_db()

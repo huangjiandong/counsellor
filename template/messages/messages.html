@@ -141,7 +141,7 @@
                                         </div>
                                     {% endif %}
                                     <div class="form-group col-md-2">
-                                        <select class="form-control col-md-2" name="message_type">
+                                        <select class="form-control col-md-2" name="type_type">
                                             <option value="">--类型--</option>
                                             <option value="1">公开留言</option>
                                             <option value="2">私密留言</option>
@@ -184,10 +184,10 @@
     var cols = [
         {
             title: "标题",
-            name: 'message_title',
+            name: 'title_title',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.message_title);
+                return createGridHtml(item.title_title);
             }
         },{
             title: "留言者",
@@ -198,14 +198,14 @@
             }
         }, {
             title: "类型",
-            name: 'message_type',
+            name: 'type_type',
             align: 'center',
             renderer: function (val, item) {
-                var message_type = item.message_type;
-                if(message_type == 1){
+                var type_type = item.type_type;
+                if(type_type == 1){
                     return "私密留言";
                 }
-                else if(message_type == 2){
+                else if(type_type == 2){
                     return "公开留言";
                 }
                 else{
@@ -214,10 +214,10 @@
             }
         }, {
             title: "留言内容",
-            name: 'message_content',
+            name: 'content_content',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.message_content);
+                return createGridHtml(item.content_content);
             }
         }, {
             title: "回复内容",
@@ -266,22 +266,22 @@
                 // 时间段
                 var dateRange = $("#reservation").val();
                 // 数据id
-                var message_title = $("#content-id").val();
+                var title_title = $("#content-id").val();
                 if (user_type == 1) {
                     var message_name = $("#content-username").val();
                     if (!isNull(message_name)) {
                         obj.message_name = message_name;
                     }
                 }
-                var message_type = $("select[name='message_type']").val();
-                if (!isNull(message_title)) {
-                    obj.message_title = message_title;
+                var type_type = $("select[name='type_type']").val();
+                if (!isNull(title_title)) {
+                    obj.title_title = title_title;
                 }
                 if (!isNull(dateRange)) {
                     obj.dateRange = dateRange;
                 }
-                if (!isNull(message_type)) {
-                    obj.message_type = message_type;
+                if (!isNull(type_type)) {
+                    obj.type_type = type_type;
                 }
                 return obj
             }

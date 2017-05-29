@@ -40,15 +40,15 @@ def messages(request, skip=0, limit=20, field='create_time', order=-1, **kwargs)
         res = sql_my_profile(username)
         user_type = res['user_type']
         # 查询条件
-        message_title = kwargs.get('message_title')
-        message_type = kwargs.get('message_type')
+        title_title = kwargs.get('title_title')
+        type_type = kwargs.get('type_type')
         message_name = kwargs.get('message_name')
         # 上传时间段
         min_date = kwargs.get('min_date')
         max_date = kwargs.get('max_date')
         if user_type == 3:
             message_name = username
-        results = select_messages(message_title, message_type, message_name, min_date, max_date, field, order,
+        results = select_messages(title_title, type_type, message_name, min_date, max_date, field, order,
                                   skip, limit)
         return JsonResponse(results, encoder=UTC2LocalEncoder)
 
@@ -83,14 +83,14 @@ def messages_edit(request):
     elif request.method == 'POST':
         try:
             if action == 'add':
-                message_content = request.POST.get('message_content', None)
-                message_type = request.POST.get('message_type', None)
-                message_title = request.POST.get('message_title', None)
+                content_content = request.POST.get('content_content', None)
+                type_type = request.POST.get('type_type', None)
+                title_title = request.POST.get('title_title', None)
                 content = {
-                    'message_title': message_title,
-                    'message_content': message_content,
+                    'title_title': title_title,
+                    'content_content': content_content,
                     'reply_content': "",
-                    'message_type': message_type,
+                    'type_type': type_type,
                     'message_name': message_name,
                     'create_time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
@@ -100,11 +100,11 @@ def messages_edit(request):
                 return HttpResponse(json.dumps({"status": 0}))
             elif action == 'edit':
                 _id = request.POST.get('_id', None)
-                message_title = request.POST.get('message_title', None)
-                message_content = request.POST.get('message_content', None)
+                title_title = request.POST.get('title_title', None)
+                content_content = request.POST.get('content_content', None)
                 content = {
-                    'message_title': message_title,
-                    'message_content': message_content,
+                    'title_title': title_title,
+                    'content_content': content_content,
                 }
                 if user_type != 3:
                     reply_content = request.POST.get('reply_content', None)

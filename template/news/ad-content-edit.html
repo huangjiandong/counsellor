@@ -57,14 +57,6 @@
                 margin-right: 10px !important;
             }
         }
-
-        #image_add {
-            display: block;
-        }
-
-        #video_add {
-            display: none;
-        }
     </style>
 </head>
 
@@ -83,154 +75,167 @@
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <aside>
-    <section class="content">
-        <div class="ui-btn-back">
-            <button type="button" class="btn btn-default btn-back">
-                <i class="fa fa-angle-left"></i>
-                返回
-            </button>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <form action="javascript:void(0)" method="post"
-                          class="form-horizontal" style="padding: 20px 0;">
-                        <input type="hidden" name="action" value="{{ action }}">
-                        {% if action == "add" %}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-7" style="color: blue;">标题和内容都必须填写</div>
-                            </div>
-                            <div id="image_add">
+        <section class="content">
+            <div class="ui-btn-back">
+                <button type="button" class="btn btn-default btn-back">
+                    <i class="fa fa-angle-left"></i>
+                    返回
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <form action="javascript:void(0)" method="post"
+                              class="form-horizontal" style="padding: 20px 0;">
+                            <input type="hidden" name="action" value="{{ action }}">
+                            {% if action == "add" %}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+
+                                    <div class="col-sm-7" style="color: blue;">标题和内容都必须填写</div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">类型</label>
                                     <div class="col-sm-7">
                                         <select class="form-control" name="factory">
-                                            <option value="0">--类型--</option>
+                                            <option value="">--类型--</option>
                                             <option value="1">公告</option>
-                                            <option value="2">新闻</option>
+                                            <option value="2">教学文件</option>
+                                            <option value="3">经验交流</option>
+                                            <option value="4">通知</option>
+                                            <option value="5">学术期刊</option>
                                         </select>
-                                    <div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">标题</label>
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="new_title" id="new_title" value="">
+                                        <input type="text" class="form-control" name="title_title" id="title_title"
+                                               value="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">内容</label>
                                     <div class="col-sm-7">
-                                        <textarea type="text" class="form-control" name="new_content" id="new_content"></textarea>
+                                        <textarea type="text" class="form-control" name="content_content"
+                                                  id="content_content"></textarea>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+
+                                    <div class="col-sm-7 error-info" style="color: red;"></div>
+                                </div>
+                            {% elif action == "edit" %}
+                                <div class="form-group" hidden>
+                                    <label class="col-sm-2 control-label">ID</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="_id" id="_id"
+                                               value="{{ content.id }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标题</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="title_title" id="title_title"
+                                               value="{{ content.title_title }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">内容</label>
+
+                                    <div class="col-sm-7">
+                                        <textarea type="text" class="form-control" name="content_content"
+                                                  id="content_content">{{ content.content_content }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">时间</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="create_time" id="create_time"
+                                               value="{{ content.create_time }}" readonly>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-7 error-info" style="color: red;"></div>
-                            </div>
-                        {% elif action == "edit" %}
-                            <div class="form-group" hidden>
-                                <label class="col-sm-2 control-label">ID</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="_id" id="_id" value="{{ content.id}}" readonly>
+                                <div class="col-sm-offset-2 col-sm-7">
+                                    <button type="submit" class="btn btn-default btn-save"><i class="fa fa-check"></i>保存
+                                    </button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">标题</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="new_title" id="new_title" value="{{ content.new_title }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">内容</label>
-                                <div class="col-sm-7">
-                                    <textarea type="text" class="form-control" name="new_content" id="new_content">{{ content.new_content}}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">时间</label>
-                                <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="create_time" id="create_time" value="{{ content.create_time }}" readonly>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-7">
-                                <button type="submit" class="btn btn-default btn-save"><i class="fa fa-check"></i>保存
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     </aside>
 </div>
 <div class="notifications bottom-right"></div>
-    <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
-    <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
-    <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
-    <script src="{% static 'js/common.min.js' %}"></script>
-    <script>
-        var action = '{{ action }}';
-        var api_url = {
-            ad_content_edit: "{% url 'ad_content_edit' %}",
-            ad_content: "{% url 'ad_content' %}"
-        };
-        $(function () {
-            // 返回
-            $('.btn-back').click(function () {
-                window.history.back();
-            });
-            // 保存
-            $('.btn-save').click(function () {
-                var args = {};
-                var _id = $("input[name='_id']").val();
-                args._id = _id;
-                var new_content = $("#new_content").val();
-                if (new_content==''){
-                    $(".error-info").text("内容不可为空！");
-                    return false;
-                }
-                args.new_content = new_content;
-                var create_time = $("input[name='create_time']").val();
-                args.create_time = create_time;
-                var new_title = $("input[name='new_title']").val();
-                if (new_title == '') {
-                    $(".error-info").text("标题不可为空！");
-                    return false;
-                }
-                args.new_title = new_title;
-                var new_type = $("select[name='factory']").val();
-                var html = '<option value="0">--请选择类型--</option>';
-                if (new_type == '0') {
-{#                    $("select[name='factory']").html(html);#}
-                    $(".error-info").text("类型不可为空！");
-                    return false;
-                }
-                args.new_type = new_type;
-                args.action = action;
-                $.post(api_url.ad_content_edit, args, function (data) {
-                    if (data.status == 0) {
-                        window.location.href = api_url.ad_content;
-                    } else {
-                        $(".error-info").text("保存失败！");
-                    }
-                }, 'json');
-                return false;
-            });
+<script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
+<script src="{% static 'js/common.min.js' %}"></script>
+<script>
+    var action = '{{ action }}';
+    var api_url = {
+        ad_content_edit: "{% url 'ad_content_edit' %}",
+        ad_content: "{% url 'ad_content' %}"
+    };
+    $(function () {
+        // 返回
+        $('.btn-back').click(function () {
+            window.history.back();
         });
+        // 保存
+        $('.btn-save').click(function () {
+            var args = {};
+            var _id = $("input[name='_id']").val();
+            args._id = _id;
+            var content_content = $("#content_content").val();
+            if (content_content == '') {
+                $(".error-info").text("内容不可为空！");
+                return false;
+            }
+            args.content_content = content_content;
+            var create_time = $("input[name='create_time']").val();
+            args.create_time = create_time;
+            var title_title = $("input[name='title_title']").val();
+            if (title_title == '') {
+                $(".error-info").text("标题不可为空！");
+                return false;
+            }
+            args.title_title = title_title;
+            var type_type = $("select[name='factory']").val();
+            var html = '<option value="0">--请选择类型--</option>';
+            if (type_type == '0') {
+                {#                    $("select[name='factory']").html(html);#}
+                $(".error-info").text("类型不可为空！");
+                return false;
+            }
+            args.type_type = type_type;
+            args.action = action;
+            $.post(api_url.ad_content_edit, args, function (data) {
+                if (data.status == 0) {
+                    window.location.href = api_url.ad_content;
+                } else {
+                    $(".error-info").text("保存失败！");
+                }
+            }, 'json');
+            return false;
+        });
+    });
 
-        /**
-         * 判断是不是IE浏览器
-         * @returns {boolean}
-         */
-        function is_ie() {
-            return navigator.userAgent.indexOf("MSIE") > 0;
-        }
-    </script>
+    /**
+     * 判断是不是IE浏览器
+     * @returns {boolean}
+     */
+    function is_ie() {
+        return navigator.userAgent.indexOf("MSIE") > 0;
+    }
+</script>
 </body>
 </html>

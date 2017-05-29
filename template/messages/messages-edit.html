@@ -103,31 +103,31 @@
                                     <div class="col-sm-7" style="color: blue;">标题和内容都必须填写</div>
                                 </div>
                                 <div id="image_add">
-                                <div class="form-group">
-                                <label class="col-sm-2 control-label">类型</label>
-                                <div class="col-sm-7">
-                                    <select class="form-control" name="message_type">
-                                        <option value="">--类型--</option>
-                                        <option value="1">私密留言</option>
-                                        <option value="2">公开留言</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">类型</label>
 
-                                    <div>
+                                        <div class="col-sm-7">
+                                            <select class="form-control" name="type_type">
+                                                <option value="">--类型--</option>
+                                                <option value="1">私密留言</option>
+                                                <option value="2">公开留言</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">标题</label>
 
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="message_title"
-                                                   id="message_title" value="">
+                                            <input type="text" class="form-control" name="title_title"
+                                                   id="title_title" value="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">留言内容</label>
 
                                         <div class="col-sm-7">
-                                            <textarea type="text" class="form-control" name="message_content"
-                                                      id="message_content"></textarea>
+                                            <textarea type="text" class="form-control" name="content_content"
+                                                      id="content_content"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -149,16 +149,16 @@
                                     <label class="col-sm-2 control-label">标题</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="message_title" id="message_title"
-                                               value="{{ content.message_title }}">
+                                        <input type="text" class="form-control" name="title_title" id="title_title"
+                                               value="{{ content.title_title }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">留言内容</label>
 
                                     <div class="col-sm-7">
-                                        <textarea type="text" class="form-control" name="message_content"
-                                                  id="message_content">{{ content.message_content }}</textarea>
+                                        <textarea type="text" class="form-control" name="content_content"
+                                                  id="content_content">{{ content.content_content }}</textarea>
                                     </div>
                                 </div>
                                 {% if user_type != 3 %}
@@ -216,27 +216,27 @@
             var args = {};
             var _id = $("input[name='_id']").val();
             args._id = _id;
-            var message_content = $("#message_content").val();
-            if (message_content == '') {
+            var content_content = $("#content_content").val();
+            if (content_content == '') {
                 $(".error-info").text("留言内容不可为空！");
                 return false;
             }
-            args.message_content = message_content;
-            var message_title = $("input[name='message_title']").val();
-            if (message_title == '') {
+            args.content_content = content_content;
+            var title_title = $("input[name='title_title']").val();
+            if (title_title == '') {
                 $(".error-info").text("标题不可为空！");
                 return false;
             }
-            args.message_title = message_title;
+            args.title_title = title_title;
 
             if (action == "add") {
-                var message_type = $("select[name='message_type']").val();
+                var type_type = $("select[name='type_type']").val();
                 var html = '<option value="0">--请选择类型--</option>';
-                if (message_type == '') {
+                if (type_type == '') {
                     $(".error-info").text("类型不可为空！");
                     return false;
                 }
-                args.message_type = message_type;
+                args.type_type = type_type;
             }
             else if (action == "edit" && user_type != 3) {
                 var reply_content = $("#reply_content").val();

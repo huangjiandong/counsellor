@@ -5,14 +5,11 @@
     <title>数据详情</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
-    <link rel="stylesheet" href="{% static 'font-awesome-4.4.0/css/font-awesome.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/mmGrid.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/mmPaginator.css' %}"/>
     <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
-    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/uikit.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'uikit-2.17.0/css/components/form-file.css' %}"/>
     <style>
         .ui-btn-back {
             margin-bottom: 15px;
@@ -29,19 +26,6 @@
 
     </style>
 </head>
-
-<header class="header">
-    <section class="content-header">
-        <h1>
-            数据详情
-            <small>数据管理</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="{% url 'main' %}">首页</a></li>
-            <li class="active">数据管理</li>
-        </ol>
-    </section>
-</header>
 
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <aside>
@@ -64,19 +48,19 @@
                             <div class="form-group">
                                 <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">标题</label>
                                 <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
-                                    {{ results.new_title }}
+                                    {{ results.title_title }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">内容</label>
                                 <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
-                                    {{ results.new_content }}
+                                    {{ results.content_content }}
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">当前时间</label>
+                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">创建时间</label>
                                 <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
-                                    {{ results.system_time }}
+                                    {{ results.create_time }}
                                 </div>
                             </div>
                                 </form>
