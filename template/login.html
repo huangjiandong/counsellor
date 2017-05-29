@@ -1,200 +1,109 @@
-﻿{% load staticfiles %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html class="" style="">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="{% static 'css/login_supersized.css' %}">
-
-    <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/supersized.3.2.7.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/login-supersized-init.js' %}"></script>
-    <title>用户登陆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="shortcut icon" href="../static/img/favicon.ico">
+    <title>Cloud</title>
+    <link rel="stylesheet" href="../static/login/page-loading.css">
+    <link rel="stylesheet" href="../static/login/font-awesome.css">
+    <link href="../static/login/bundle.css" rel="stylesheet">
+    <script src="../static/js/jquery-2.0.0.js"></script>
+    <script src="../static/login/login.js"></script>
     <style>
-        body {
-            text-align: center;
+        dl.list dd + dt:before {
+            content: '\D\A' !important;
         }
 
-        .user_input
-        {
-            width: 210px;
-            height: 30px;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 31%;
-            top: 24%;
+        .longhaul-topo .nodes-title:before {
+            content: '\D\A' !important;
         }
 
-        .pwd_input{
-            width: 210px;
-            height: 30px;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 31%;
-            top: 39%;
-        }
-        .code_input{
-            width: 90px;
-            height: 30px;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            vertical-align:middle;
-            left: 31%;
-            top: 52%;
-        }
-
-        .user_font{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 17%;
-            top: 21%;
-        }
-        .pwd_font{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 17%;
-            top: 35%;
-        }
-        .code_font{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 17%;
-            top: 49%;
-        }
-        .a_font{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 75%;
-            top: 50%;
-        }
-        .ui-validate-text{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 50%;
-            top: 53%;
-            height: 30px;
-            width: 120px;
-            vertical-align: middle;
-            cursor:pointer;
-        }
-        .div_head
-        {
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 44%;
-            top: 5%;
-        }
-
-
-        .note_div{
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 27%;
-            top: 80%;
-        }
-
-        .sub_btn
-        {
-            width:100px;
-            height:40px;
-            margin-left: auto;
-            margin-right: auto;
-            position: absolute;
-            left: 38%;
-            top: 69%;
-        }
-
-        .div_login {
-            background-color: #00FFFF;
-            margin-right: auto;
-            height: 300px;
-            width: 500px;
-            text-align: center;
-            margin-top: -175px;
-            margin-left: -250px;
-            line-height: 50px;
-            vertical-align: -13px;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-        }
-        a{
-            text-decoration: none;
-        }
-        .qr-code-img{
-            position: absolute;
-            z-index: 50;
-            right: 12%;
-            width:200px;
-            height:200px;
-            top: 92%;
-
+        .root-login {
             display: none;
         }
     </style>
-</head>
+    <script>
+        window.onload = function () {
+            Set_Code();
+        };
 
-<body>
-    <div class="div_login">
-        <div class="div_head">
-            <span><strong><font size="5" color="blue"><label>登录</label></font></strong></span>
+        window.setTimeout(function () {
+            // juqery 淡出
+            $("#page--loading").fadeOut(500);
+            // juqery 淡入
+            $("#root-login").fadeIn(1000);
+        }, 500)
+    </script>
+</head>
+<body class="body--login">
+
+<div class="page--loading" id="page--loading">
+    <div class="loading--container">
+        <span class="L">L</span>
+        <div class="outter">
+            <div class="mid"></div>
         </div>
-        <!-- from表单 Start-->
-        <form method='post' enctype="multipart/form-data">
-            <div>
-                <font class="user_font" size="4" color="blue">帐　号:</font>
-                <input type="text" name="username" class="user_input" placeholder="请输入帐号" required="required"
-                       oninvalid="this.setCustomValidity('请输入帐号');" oninput="setCustomValidity('')"/>
+        <span class="text--left">ADING</span>
+    </div>
+</div>
+<div class="root-login" id="root-login">
+    <div data-reactroot="" class="layout hide-footer hide-sidebar">
+        <div class="main">
+            <div class="login">
+                <div class="form">
+                    <form method='post' enctype="multipart/form-data" action="/login">
+                        <fieldset>
+                            <legend><span>登录</span>
+                                <ul class="language">
+                                    <li class="language__item" data-language="zh-CN"><a href="/register">注册</a></li>
+                                </ul>
+                            </legend>
+                            <div class="form__group"><label class="form__label">用户名</label>
+                                <div class="form__control-group"><input type="text" class="form__control has-icon"
+                                                                        name="username" placeholder="用户名"><span
+                                        class="form__control-icon"><i class="fa fa-user"></i></span></div>
+                                <div class="form__group"><label class="form__label">密码</label>
+                                    <div class="form__control-group"><input type="password"
+                                                                            class="form__control has-icon"
+                                                                            name="password" placeholder="密码"><span
+                                            class="form__control-icon"><i class="fa fa-lock"></i></span></div>
+                                </div>
+                                <div class="form__group captcha">
+                                    <div class="form__control-group">
+                                        <input type="text" class="form__control has-icon" id="form__code" name="captcha"
+                                               placeholder="验证码">
+                                            <span class="form__control-icon">
+                                                <i class="fa fa-shield"></i>
+                                            </span>
+                                    </div>
+                                    <img class="form__captcha" id="form__captcha" src="" alt="验证码"
+                                         onclick="return Set_Code()"></div>
+                                <div class="form__group">
+                                    <button type="submit" class="form__btn form__submit" onclick="return Check_Code()">
+                                        <i class="fa fa-sign-in mr5"></i><span>登录</span>
+                                    </button>
+                                </div>
+                                <div class="form__group form__message" id="message">
+                                    <div class="login-alert login-alert-info" id="code_message" contenteditable="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="info"><h3 class="info__hd"><a href="https://counsellor.github.io" target="_blank"><img
+                        class="info__logo" src="../static/login/logo-v.png" alt="踏雪寻梅科技"></a></h3>
+                    <div class="info__bd"><h1 class="info__title">Cloud</h1>
+                        <p class="info__desc">云平台</p></div>
+                    <div class="info__version">版本: 5.0.0</div>
+                </div>
             </div>
-            <div>
-                <font class="pwd_font" size="4" color="blue">密　码:</font>
-                <input type="password" name="password" class="pwd_input" placeholder="请输入密码" required="required"
-                       oninvalid="this.setCustomValidity('请输入密码');" oninput="setCustomValidity('')"/>
-            </div>
-            <div>
-                <font class="code_font" size="4" color="blue">验证码:</font>
-                <input type="Captcha" name="Captcha" class="code_input"
-                       placeholder="请输入验证码"
-                       required="required" oninvalid="this.setCustomValidity('请输入验证码');" oninput="setCustomValidity('')"/>
-                <img class="ui-validate-text"
-                     src="get_code"
-                     onclick="this.src='get_code?v='+Math.random();"
-                     title="点击更换验证码"
-                     alt="验证码"/>
-                <a class="a_font" href="javascript:void(0)" onclick="$('.ui-validate-text').click()" title="看不清，换一换">换一换</a>
-            </div>
-            <div>
-                <input type="submit" class="sub_btn" value="登录"/>
-            </div>
-        </form>
-        <!--from表单 End-->
-        <img class="qr-code-img" hidden="hidden" src="{% static 'img/upload/刘亦菲.jpg' %}">
-        <div class="note_div">
-            <strong><font color="red">注意事项</font></strong>
-            <span>第一次使用请<a class="weixin" href="{% url "register" %}">注册帐号</a></span>
         </div>
     </div>
+</div>
 </body>
-    <script>
-        $(function () {
-        $(".weixin").bind("mouseover", function () {
-
-            $(".qr-code-img").show()
-
-        });
-        $(".weixin").bind("mouseout", function () {
-
-            $(".qr-code-img").hide()
-        });
-    });
-    </script>
 </html>

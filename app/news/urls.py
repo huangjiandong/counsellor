@@ -1,7 +1,10 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import patterns, url
 
-grid_patterns = patterns(
-    'app.mmGrid.views',
+news_patterns = patterns(
+    'app.news.views',
     url(r'ad_content$', 'ad_content', name='ad_content'),
     url(r'ad_content_edit$', 'ad_content_edit', name='ad_content_edit'),
     url(r'ad_content_delete$', 'ad_content_delete', name='ad_content_delete'),

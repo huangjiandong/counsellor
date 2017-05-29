@@ -1,8 +1,10 @@
-# coding=utf-8
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from common.utils import login_required
-from common.helper import error, set_password
+from common.helper import login_required
+from common.utils import error, md5_16
 from common.mysql_helper import sql_my_profile, sql_user_type_menu, sql_url_menu, sql_url_id
 from common.mysql_helper import sql_menu_role, sql_update_menu_role, sql_update_password, sql_username_password
 from model.user import User
@@ -32,8 +34,10 @@ def register(request):
         pwd = request.REQUEST.get('password', None)
         password2 = request.REQUEST.get('password2', None)
         nickname = request.REQUEST.get('nickname', None)
+        # 用户类型
+        user_type = request.REQUEST.get('user_type', None)
         upload_head = request.FILES['upload_head']
-        if username and pwd and nickname and upload_head:
+        if username and pwd and nickname and upload_head and user_type:
             # 判断两次密码是否一致
             if pwd != password2:
                 return HttpResponse('<html><script type="text/javascript">alert("两次密码不一致"); '
@@ -45,8 +49,14 @@ def register(request):
                                     'window.location="/register"</script></html>')
             pwd += username
             # 添加到数据库
-            password = set_password(pwd)
-            User.objects.create(username=username, password=password, nickname=nickname, upload_head=upload_head)
+            password = md5_16(pwd)
+            # 需要管理员审核
+            if user_type == "2":
+                status = "3"
+            else:
+                status = "1"
+            User.objects.create(username=username, password=password, nickname=nickname, user_type=user_type,
+                                upload_head=upload_head, status=status)
             return HttpResponse('<html><script type="text/javascript">alert("注册成功"); '
                                 'window.location="/login"</script></html>')
         else:
@@ -64,14 +74,19 @@ def login(request):
         if username and pwd:
             pwd += username
             # 再次加密进行验证
-            password = set_password(pwd)
+            password = md5_16(pwd)
             print("用户名： {}， 密码：{}, 加密后密码：{}".format(username, pwd, password))
             # 获取的表单数据与数据库进行比较
-            user = User.objects.filter(username__exact=username, password__exact=password)
-            if user:
+            check_pwd = User.objects.filter(username__exact=username, password__exact=password)
+            if check_pwd:
+                res = sql_my_profile(username)
+            else:
+                # 比较失败
+                return HttpResponse('<html><script type="text/javascript">alert("帐号密码不匹配"); '
+                                    'window.location="/login"</script></html>')
+            if res["status"] == 1:
                 # 比较成功，跳转index
                 response = HttpResponseRedirect('/index')
-                res = sql_my_profile(username)
                 # 将username写入浏览器session
                 request.session['username'] = username
                 # 将用户类型写入session
@@ -83,15 +98,19 @@ def login(request):
                 # response.set_cookie('upload_head', upload_head)
                 # request.COOKIES['upload_head'] = upload_head
                 return response
-            else:
+            elif res["status"] == 2:
                 # 比较失败
-                return HttpResponse('<html><script type="text/javascript">alert("帐号密码不匹配"); '
+                return HttpResponse('<html><script type="text/javascript">alert("您的帐号被禁用了，请联系管理员"); '
+                                    'window.location="/login"</script></html>')
+            elif res["status"] == 3:
+                # 比较失败
+                return HttpResponse('<html><script type="text/javascript">alert("您的帐号未通过审核，请联系管理员"); '
                                     'window.location="/login"</script></html>')
         else:
             return HttpResponse('<html><script type="text/javascript">alert("帐号密码不能为空"); '
                                 'window.location="/login"</script></html>')
     elif request.method == 'GET':
-        return render(request, 'woqu.html')
+        return render(request, 'login.html')
 
 
 # 登陆成功
@@ -147,10 +166,10 @@ def modify_pwd(request):
                 password = sql_username_password(username)
                 old_pwd += username
                 # 加密进行验证
-                old_pwd = set_password(old_pwd)
+                old_pwd = md5_16(old_pwd)
                 if password == old_pwd:
                     new_pwd += username
-                    new_pwd = set_password(new_pwd)
+                    new_pwd = md5_16(new_pwd)
                     result = sql_update_password(new_pwd, username)
                     if result == 'ok':
                         ret = error(0)

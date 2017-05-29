@@ -1,3 +1,6 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # 表格
 import datetime
 import json
@@ -6,7 +9,7 @@ from bson import ObjectId
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from common.utils import login_required
+from common.helper import login_required
 from common.mongo_helper import mmgrid_decorator, select_ad_content, get_db
 from common.utils import UTC2LocalEncoder
 from audioop import reverse

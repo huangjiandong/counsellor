@@ -16,6 +16,11 @@
             height: 30px;
         }
 
+        .select_class {
+            width: 246px;
+            height: 30px;
+        }
+
         .div_login {
             background-color: #00FFFF;
             height: 500px;
@@ -75,10 +80,11 @@
                    oninvalid="this.setCustomValidity('请输入昵称');" oninput="setCustomValidity('')"/>
         </div>
         <div>
-            <font size="4" color="blue">住　　址:</font>
-                <select id="selProvince" class="form-control"></select>
-                <select id="selCity" class="form-control"></select>
-                <select id="selArea" class="form-control"></select>
+            <font size="4" color="blue">用户类型:</font>
+            <select value="1" class="select_class form-control" name="user_type">
+                <option value="3">普通用户</option>
+                <option value="2">辅导员</option>
+            </select>
         </div>
         <div>
             <font size="4" color="blue">上传头像:</font>
@@ -96,7 +102,6 @@
     </form>
     <!-- from表单 End-->
 </div>
-<script src="{% static 'js/address.js' %}"></script>
 <script>
     addressInit('selProvince', 'selCity', 'selArea');
     function previewImage(file) {
@@ -105,7 +110,7 @@
         var type = imagePath.substr(imagePath.lastIndexOf(".")).toUpperCase();
         if (!(type == ".JPEG" || type == ".JPG" || type == ".GIF" || type == ".PNG")) {
             alert('只能上传(jpg)|(png)|(bmp)|(gif)|(jpeg)格式的图片');
-            fileUpload.value="";
+            fileUpload.value = "";
             return false;
         }
     }

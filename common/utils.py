@@ -27,13 +27,45 @@
 ┃┫┫ ┃┫┫
 ┗┻┛ ┗┻┛
 """
-from django.http.response import HttpResponseRedirect
+import copy
+import hashlib
+import os
+import re
+
 import datetime
 import json
 import time
 from decimal import Decimal
-
 from bson import ObjectId
+
+status = {
+    0: '请求成功',
+
+    1: '两次密码不一致',
+    2: '原密码错误',
+    3: '数据不完整',
+    4: '修改操作失败'
+}
+message = {
+    'status': '',
+    'data': '',
+    'error': ''
+}
+
+
+def error(code=0, data=''):
+    """
+    错误信息
+    :param code:
+    :param data:
+    :return: 返回一个封装好错误信息的json格式的数据
+    """
+    msg = copy.copy(message)
+    msg['status'] = code
+    msg['error'] = status[code]
+    if data:
+        msg['data'] = data
+    return json.dumps(msg)
 
 
 class UTC2LocalEncoder(json.JSONEncoder):
@@ -83,16 +115,59 @@ def local2utc(local_st):
     return utc_st
 
 
-def login_required(func):
+def format_time(dt):
     """
-    登录装饰器，用于判断是否登录
+    格式化日期时间
+    """
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def md5hex(word):
+    """ MD5加密算法，返回32位小写16进制符号
+    """
+    try:
+        word = word.encode("utf-8")
+    except:
+        word = str(word)
+    m = hashlib.md5()
+    m.update(word)
+    return m.hexdigest()
+
+
+def md5_16(word):
+    """
+    MD5加密 16位
+    :param word:
+    :return: 生成16位加密数据
+    """
+    return md5hex(word)[8:-8]
+
+
+def qq_face_path():
+    """
+    QQ表情路径
     :return:
     """
+    path = r'./static/qqface/face'
+    result = []
+    if os.path.isdir(path):
+        for root, dirs, files in os.walk(path):
+            for name in files:
+                name = name[:-4]
+                result.append(name)
+    result = json.dumps(result)
+    return result
 
-    def wrap(request):
-        if not request.session.get('username', False):
-            return HttpResponseRedirect("login")
-        else:
-            return func(request)
 
-    return wrap
+def font_to_img(item):
+    """
+    显示表情
+    :param item:
+    :return:
+    """
+    ret = re.findall('\[([\w]+)\]', item)
+    for j in ret:
+        b = "[" + j + "]"
+        c = '<img src="static/qqface/face/' + j + '.gif" border="0">'
+        item = item.replace(b, c)
+    return item

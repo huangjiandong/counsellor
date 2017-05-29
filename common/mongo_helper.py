@@ -1,7 +1,8 @@
-# coding=utf-8
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import datetime
 import logging
-from bson import ObjectId
 from pymongo import MongoClient
 from django.db import models
 from time import mktime
