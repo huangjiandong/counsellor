@@ -151,7 +151,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">时间</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" name="system_time" id="system_time" value="{{ content.system_time }}" readonly>
+                                    <input type="text" class="form-control" name="create_time" id="create_time" value="{{ content.create_time }}" readonly>
                                 </div>
                             </div>
                         {% endif %}
@@ -196,8 +196,8 @@
                     return false;
                 }
                 args.new_content = new_content;
-                var system_time = $("input[name='system_time']").val();
-                args.system_time = system_time;
+                var create_time = $("input[name='create_time']").val();
+                args.create_time = create_time;
                 var new_title = $("input[name='new_title']").val();
                 if (new_title == '') {
                     $(".error-info").text("标题不可为空！");

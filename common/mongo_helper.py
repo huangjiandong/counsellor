@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import logging
 from pymongo import MongoClient
 from django.db import models
 from time import mktime
@@ -111,43 +110,6 @@ def wrap_model(results, keys=None):
     return items
 
 
-def select_ad_content(new_title, new_type, min_date, max_date, field='system_time', order=-1, skip=0, limit=20):
-    """
-
-    查询数据
-    :param new_title:
-    :param new_type:
-    :param min_date:
-    :param max_date:
-    :param field:
-    :param order:
-    :param skip:
-    :param limit:
-    :return:
-    """
-    try:
-        db = get_db()
-        collection = db.ebf_content
-        params = dict()
-        if min_date and max_date:
-            date_range = {'$gte': min_date, '$lte': max_date}
-            params['system_time'] = date_range
-        # if _id:
-        #     params['_id'] = ObjectId(_id)
-        if new_title:
-            params['new_title'] = new_title
-        if new_type and new_type != '0':
-            params['new_type'] = new_type
-        results = collection.find(params)
-        results.sort(field, order).skip(skip).limit(limit)
-        count = results.count()
-        items = wrap_model(results)
-        return {"totalCount": count, "items": items}
-    except Exception as e:
-        print(e)
-        return {"totalCount": 0, "items": []}
-
-
 def mmgrid_decorator(has_user=False, db_type="model"):
     """
     mmgrid表格插件请求装饰器
@@ -221,19 +183,76 @@ def convert_local_to_utc(normal, trans=True, fm='%Y-%m-%d'):
         return normal - datetime.timedelta(hours=8)
 
 
-def mongodb_username_card():
+def select_ad_content(new_title, new_type, min_date, max_date, field='create_time', order=-1, skip=0, limit=20):
     """
-    查询发表过的说说内容
+
+    查询数据
+    :param new_title:
+    :param new_type:
+    :param min_date:
+    :param max_date:
+    :param field:
+    :param order:
+    :param skip:
+    :param limit:
     :return:
     """
     try:
         db = get_db()
-        collection = db.ebf_news
-        results = collection.find()
-        results.sort('create_date', -1)
+        collection = db.ebf_content
+        params = dict()
+        if min_date and max_date:
+            date_range = {'$gte': min_date, '$lte': max_date}
+            params['create_time'] = date_range
+        # if _id:
+        #     params['_id'] = ObjectId(_id)
+        if new_title:
+            params['new_title'] = new_title
+        if new_type:
+            params['new_type'] = new_type
+        results = collection.find(params)
+        results.sort(field, order).skip(skip).limit(limit)
+        count = results.count()
         items = wrap_model(results)
-        return items
+        return {"totalCount": count, "items": items}
     except Exception as e:
-        logging.exception(e)
-        items = []
-    return items
+        print(e)
+        return {"totalCount": 0, "items": []}
+
+
+def select_messages(message_title, message_type, username, min_date, max_date, field, order, skip, limit):
+    """
+
+    :param message_title:
+    :param message_type:
+    :param username:
+    :param min_date:
+    :param max_date:
+    :param field:
+    :param order:
+    :param skip:
+    :param limit:
+    :return:
+    """
+    try:
+        db = get_db()
+        collection = db.ebf_messages
+        params = dict()
+        if min_date and max_date:
+            date_range = {'$gte': min_date, '$lte': max_date}
+            params['create_time'] = date_range
+        if message_title:
+            params['message_title'] = message_title
+        if message_type:
+            params['message_type'] = message_type
+        # 用户类型
+        if username:
+            params['message_name'] = username
+        results = collection.find(params)
+        results.sort(field, order).skip(skip).limit(limit)
+        count = results.count()
+        items = wrap_model(results)
+        return {"totalCount": count, "items": items}
+    except Exception as e:
+        print(e)
+        return {"totalCount": 0, "items": []}

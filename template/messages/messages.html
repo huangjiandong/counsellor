@@ -6,7 +6,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
     <meta content="yes" name="apple-touch-fullscreen"/>
-    <title>后台管理</title>
+    <title>留言管理</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
     <meta content="telephone=no,email=no" name="format-detection"/>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
@@ -102,11 +102,11 @@
     <section class="content-header">
         <h1>
             后台
-            <small>后台管理</small>
+            <small>留言管理</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{% url 'main' %}">首页</a></li>
-            <li class="active">后台管理</li>
+            <li class="active">留言管理</li>
         </ol>
     </section>
 </header>
@@ -134,25 +134,22 @@
                                         <input type="text" class="form-control" placeholder="请输入标题"
                                                id="content-id"/>
                                     </div>
+                                    {% if user_type != 3 %}
+                                        <div class="form-group col-md-2">
+                                            <input type="text" class="form-control" placeholder="请输入作者"
+                                                   id="content-username"/>
+                                        </div>
+                                    {% endif %}
                                     <div class="form-group col-md-2">
-                                        <select class="form-control col-md-2" name="factory">
+                                        <select class="form-control col-md-2" name="message_type">
                                             <option value="">--类型--</option>
-                                            <option value="1">公告</option>
-                                            <option value="2">新闻</option>
+                                            <option value="1">公开留言</option>
+                                            <option value="2">私密留言</option>
                                         </select>
                                     </div>
                                     <input type="button" value="筛选" id="btnFilter" class="btn btn-primary"/>
-                                    <a href="{% url 'ad_content_edit' %}?action=add" id="btn-add-commodity"
-                                       class="btn btn-primary btn-right">添加数据</a>
-                                </div>
-                                <div class="table-top-style">
-                                    <button class="btn btn-primary" id="btnAuditPass" disabled="disabled"><i
-                                            class="fa fa-check-circle"></i>通过
-                                    </button>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <button class="btn btn-danger" id="btnAuditFail" disabled="disabled"><i
-                                            class="fa fa-times"></i>拒绝
-                                    </button>
+                                    <a href="{% url 'messages_edit' %}?action=add" id="btn-add-commodity"
+                                       class="btn btn-primary btn-right">添加留言</a>
                                 </div>
                                 <table id="table6-1"></table>
                                 <div class="table-paginator">
@@ -179,42 +176,58 @@
 <script src="{% static 'mmGrid/mmPaginator.js' %}"></script>
 <script src="{% static 'js/mmGrid-adaptor.js' %}"></script>
 <script>
+    var user_type = {{ user_type }};
     var url = {
-        ad_content: "{% url 'ad_content' %}",
-        ad_content_delete: "{% url 'ad_content_delete' %}"
+        messages: "{% url 'messages' %}",
+        messages_delete: "{% url 'messages_delete' %}"
     };
     var cols = [
-{#        {#}
-{#            title: "ID",#}
-{#            name: '_id',#}
-{#            align: 'center',#}
-{#            renderer: function (val, item) {#}
-{#                return createGridHtml(item._id);#}
-{#            }#}
-{#        },#}
         {
             title: "标题",
-            name: 'new_title',
+            name: 'message_title',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.new_title);
+                return createGridHtml(item.message_title);
             }
         },{
-            title: "类型",
-            name: 'new_type',
+            title: "留言者",
+            name: 'message_name',
             align: 'center',
             renderer: function (val, item) {
-                return createGridHtml(item.new_type);
-            }
-        },{
-            title: "内容",
-            name: 'new_content',
-            align: 'center',
-            renderer: function (val, item) {
-                return createGridHtml(item.new_content);
+                return createGridHtml(item.message_name);
             }
         }, {
-            title: '当前时间',
+            title: "类型",
+            name: 'message_type',
+            align: 'center',
+            renderer: function (val, item) {
+                var message_type = item.message_type;
+                if(message_type == 1){
+                    return "私密留言";
+                }
+                else if(message_type == 2){
+                    return "公开留言";
+                }
+                else{
+                    return "未知";
+                }
+            }
+        }, {
+            title: "留言内容",
+            name: 'message_content',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item.message_content);
+            }
+        }, {
+            title: "回复内容",
+            name: 'reply_content',
+            align: 'center',
+            renderer: function (val, item) {
+                return createGridHtml(item.reply_content);
+            }
+        }, {
+            title: '创建时间',
             sortable: true,
             name: 'create_time',
             align: 'center',
@@ -228,8 +241,8 @@
             align: 'center',
             renderer: function (val, item) {
                 var value = item._id;
-                return '<a href="ad_content_edit?action=edit&_id=' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-pencil-square-o"></i>编辑</a>&nbsp;' +
-                        '<a href="content_detail/' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-external-link"></i>详情</a>&nbsp;' +
+                return '<a href="messages_edit?action=edit&_id=' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-pencil-square-o"></i>编辑</a>&nbsp;' +
+                        '<a href="messages_detail/' + value + '" class="btn btn-default btn-edit"> <i class="fa fa-external-link"></i>详情</a>&nbsp;' +
                         '<a href="javascript:void(0)" data-id="' + item._id + '" data-name="' + item._id + '" class="btn btn-default btn-delete"> <i class="fa fa-trash-o"></i>删除</a>';
             }
         }];
@@ -253,30 +266,24 @@
                 // 时间段
                 var dateRange = $("#reservation").val();
                 // 数据id
-                var new_title = $("#content-id").val();
-                var content_type = $("select[name='factory']").val();
-                if (!isNull(new_title)) {
-                    obj.new_title = new_title;
+                var message_title = $("#content-id").val();
+                if (user_type == 1) {
+                    var message_name = $("#content-username").val();
+                    if (!isNull(message_name)) {
+                        obj.message_name = message_name;
+                    }
+                }
+                var message_type = $("select[name='message_type']").val();
+                if (!isNull(message_title)) {
+                    obj.message_title = message_title;
                 }
                 if (!isNull(dateRange)) {
                     obj.dateRange = dateRange;
                 }
-                if (!isNull(content_type)) {
-                    obj.new_type = content_type;
+                if (!isNull(message_type)) {
+                    obj.message_type = message_type;
                 }
                 return obj
-            }
-        });
-        // 通过、拒绝操作，为checkbox绑定事件
-        $(document).delegate("input[type='checkbox']", "change", function () {
-            //获取选中的数据,不管是否有单选、复选框都有效
-            var rows = mmgrid.selectedRows();
-            if (rows.length > 0) {
-                $("#btnAuditPass").attr("disabled", false);
-                $("#btnAuditFail").attr("disabled", false);
-            } else {
-                $("#btnAuditPass").attr("disabled", true);
-                $("#btnAuditFail").attr("disabled", true);
             }
         });
         return mmgrid;
@@ -295,7 +302,7 @@
         //加载日期控件
         $('#reservation').daterangepicker({"maxDate": new Date()});
         //渲染表格
-        var mmg = renderGrid(url.ad_content);
+        var mmg = renderGrid(url.messages);
         $("#btnFilter").bind("click", function () {
             // 筛选后重新加载表格数据
             mmg.load({page: 1});
@@ -306,7 +313,7 @@
             var name = $(this).attr('data-name');
             if (window.confirm('确定删除 <' + name + '> ?')) {
                 var id = $(this).attr('data-id');
-                $.post(url.ad_content_delete, {"id": id}, function (data) {
+                $.post(url.messages_delete, {"id": id}, function (data) {
                     if (data.status == 0) {
                         //dwnotify("删除成功!");
                         alert('删除成功!');

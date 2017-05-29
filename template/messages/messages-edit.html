@@ -1,0 +1,272 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmGrid.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmPaginator.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
+    <style>
+        .ui-btn-back {
+            margin-bottom: 15px;
+        }
+
+        #my-id img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background: white;
+            opacity: 0.85;
+            border-radius: 5px;
+        }
+
+        .img-thumbnail {
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .uk-close {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .ui-kit-covert-img {
+            height: 50px;
+        }
+
+        .ui-kit-covert-ul {
+            padding-left: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .ui-file-input {
+            height: 34px;
+            z-index: 1;
+            opacity: 0.1;
+            filter: progid:DXImageTransform.Microsoft.Alpha(opacity=10);
+        }
+
+        @media screen and (max-width: 767px) {
+            .form-horizontal .form-group {
+                margin-left: 10px !important;
+                margin-right: 10px !important;
+            }
+        }
+
+        #image_add {
+            display: block;
+        }
+
+        #video_add {
+            display: none;
+        }
+    </style>
+</head>
+
+<header class="header">
+    <section class="content-header">
+        <h1>
+            数据{{ title }}
+            <small>数据管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'main' %}">首页</a></li>
+            <li class="active">数据管理</li>
+        </ol>
+    </section>
+</header>
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside>
+        <section class="content">
+            <div class="ui-btn-back">
+                <button type="button" class="btn btn-default btn-back">
+                    <i class="fa fa-angle-left"></i>
+                    返回
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <form action="javascript:void(0)" method="post"
+                              class="form-horizontal" style="padding: 20px 0;">
+                            <input type="hidden" name="action" value="{{ action }}">
+                            {% if action == "add" %}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+
+                                    <div class="col-sm-7" style="color: blue;">标题和内容都必须填写</div>
+                                </div>
+                                <div id="image_add">
+                                <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="message_type">
+                                        <option value="">--类型--</option>
+                                        <option value="1">私密留言</option>
+                                        <option value="2">公开留言</option>
+                                    </select>
+
+                                    <div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">标题</label>
+
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="message_title"
+                                                   id="message_title" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">留言内容</label>
+
+                                        <div class="col-sm-7">
+                                            <textarea type="text" class="form-control" name="message_content"
+                                                      id="message_content"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+
+                                    <div class="col-sm-7 error-info" style="color: red;"></div>
+                                </div>
+                            {% elif action == "edit" %}
+                                <div class="form-group" hidden>
+                                    <label class="col-sm-2 control-label">ID</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="_id" id="_id"
+                                               value="{{ content.id }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标题</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="message_title" id="message_title"
+                                               value="{{ content.message_title }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">留言内容</label>
+
+                                    <div class="col-sm-7">
+                                        <textarea type="text" class="form-control" name="message_content"
+                                                  id="message_content">{{ content.message_content }}</textarea>
+                                    </div>
+                                </div>
+                                {% if user_type != 3 %}
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">回复内容</label>
+
+                                        <div class="col-sm-7">
+                                            <textarea type="text" class="form-control" name="reply_content"
+                                                      id="reply_content">{{ content.reply_content }}</textarea>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">时间</label>
+
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="create_time" id="create_time"
+                                               value="{{ content.create_time }}" readonly>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-7">
+                                    <button type="submit" class="btn btn-default btn-save"><i class="fa fa-check"></i>保存
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </aside>
+</div>
+<div class="notifications bottom-right"></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
+<script src="{% static 'js/common.min.js' %}"></script>
+<script>
+    var action = '{{ action }}';
+    var user_type = '{{ user_type }}';
+    var api_url = {
+        messages_edit: "{% url 'messages_edit' %}",
+        messages: "{% url 'messages' %}"
+    };
+    $(function () {
+        // 返回
+        $('.btn-back').click(function () {
+            window.history.back();
+        });
+        // 保存
+        $('.btn-save').click(function () {
+            var args = {};
+            var _id = $("input[name='_id']").val();
+            args._id = _id;
+            var message_content = $("#message_content").val();
+            if (message_content == '') {
+                $(".error-info").text("留言内容不可为空！");
+                return false;
+            }
+            args.message_content = message_content;
+            var message_title = $("input[name='message_title']").val();
+            if (message_title == '') {
+                $(".error-info").text("标题不可为空！");
+                return false;
+            }
+            args.message_title = message_title;
+
+            if (action == "add") {
+                var message_type = $("select[name='message_type']").val();
+                var html = '<option value="0">--请选择类型--</option>';
+                if (message_type == '') {
+                    $(".error-info").text("类型不可为空！");
+                    return false;
+                }
+                args.message_type = message_type;
+            }
+            else if (action == "edit" && user_type != 3) {
+                var reply_content = $("#reply_content").val();
+                if (reply_content == '') {
+                    $(".error-info").text("回复内容不可为空！");
+                    return false;
+                }
+                args.reply_content = reply_content;
+                var create_time = $("input[name='create_time']").val();
+                args.create_time = create_time;
+            }
+            args.action = action;
+            $.post(api_url.messages_edit, args, function (data) {
+                if (data.status == 0) {
+                    window.location.href = api_url.messages;
+                } else {
+                    $(".error-info").text("保存失败！");
+                }
+            }, 'json');
+            return false;
+        });
+    });
+
+    /**
+     * 判断是不是IE浏览器
+     * @returns {boolean}
+     */
+    function is_ie() {
+        return navigator.userAgent.indexOf("MSIE") > 0;
+    }
+</script>
+</body>
+</html>

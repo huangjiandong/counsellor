@@ -1,0 +1,110 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>数据详情</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmGrid.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/mmPaginator.css' %}"/>
+    <link rel="stylesheet" href="{% static 'mmGrid/theme/bootstrap/mmGrid-bootstrap.css' %}"/>
+    <style>
+        .ui-btn-back {
+            margin-bottom: 15px;
+        }
+
+        #my-id img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background: white;
+            opacity: 0.85;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<header class="header">
+    <section class="content-header">
+        <h1>
+            数据详情
+            <small>数据管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'main' %}">首页</a></li>
+            <li class="active">数据管理</li>
+        </ol>
+    </section>
+</header>
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside>
+        <section class="content">
+            <div class="ui-btn-back">
+                <button type="button" class="btn btn-default btn-back">
+                    <i class="fa fa-angle-left"></i>
+                    返回
+                </button>
+            </div>
+            {% if message %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ message }}</label>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box">
+                            <form action="javascript:void(0)" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">标题</label>
+                                <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    {{ results.message_title }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">留言内容</label>
+                                <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    {{ results.message_content }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">回复内容</label>
+                                <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    {{ results.reply_content }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">留言时间</label>
+                                <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    {{ results.create_time }}
+                                </div>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+    </aside>
+</div>
+<div class="notifications bottom-right"></div>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
+
+
+<script>
+    $(function () {
+        // 返回
+        $('.btn-back').click(function () {
+            window.history.back();
+        });
+    });
+
+</script>
+</body>
+</html>

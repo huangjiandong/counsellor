@@ -18,7 +18,7 @@ from audioop import reverse
 
 @login_required
 @mmgrid_decorator(has_user=False, db_type='mongodb')
-def ad_content(request, skip=0, limit=20, field='system_time', order=-1, **kwargs):
+def ad_content(request, skip=0, limit=20, field='create_time', order=-1, **kwargs):
     """
     数据管理
     :param request:
@@ -76,7 +76,7 @@ def ad_content_edit(request):
                     'new_title': new_title,
                     'new_content': new_content,
                     'new_type': new_type,
-                    'system_time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    'create_time': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
                 db = get_db()
                 posts = db.ebf_content
@@ -87,12 +87,12 @@ def ad_content_edit(request):
                 new_title = request.POST.get('new_title', None)
                 new_content = request.POST.get('new_content', None)
                 new_type = request.POST.get('new_type', None)
-                system_time = request.POST.get('system_time', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                create_time = request.POST.get('create_time', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 content = {
                     'new_title': new_title,
                     'new_content': new_content,
                     'new_type': new_type,
-                    'system_time': system_time
+                    'create_time': create_time
                 }
                 db = get_db()
                 posts = db.ebf_content
