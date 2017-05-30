@@ -76,8 +76,14 @@ def register(request):
                 status = "1"
             User.objects.create(username=username, password=password, nickname=nickname, user_type=user_type,
                                 upload_head=upload_head, status=status)
-            return HttpResponse('<html><script type="text/javascript">alert("注册成功"); '
-                                'window.location="/login"</script></html>')
+
+            # 需要管理员审核
+            if user_type == "2":
+                return HttpResponse('<html><script type="text/javascript">alert("注册成功!，请联系管理通过帐号审核。"); '
+                                    'window.location="/login"</script></html>')
+            else:
+                return HttpResponse('<html><script type="text/javascript">alert("注册成功"); '
+                                    'window.location="/login"</script></html>')
         else:
             return HttpResponse('<html><script type="text/javascript">alert("数据格式不完整"); '
                                 'window.location="/register"</script></html>')

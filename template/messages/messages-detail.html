@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>数据详情</title>
+    <title>留言详情</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/AdminLTE.css' %}"/>
     <link rel="stylesheet" href="{% static 'bootstrap/AdminLTE/css/daterangepicker/daterangepicker-bs3.css' %}"/>
@@ -26,11 +26,23 @@
 
     </style>
 </head>
-
+<div class="notifications bottom-right" style="z-index: 100"></div>
+<header class="header detail-show" hidden="hidden">
+    <section class="content-header">
+        <h1>
+            后台
+            <small>留言详情</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'main' %}">首页</a></li>
+            <li class="active">留言管理</li>
+        </ol>
+    </section>
+</header>
 <div class="wrapper row-offcanvas row-offcanvas-left">
     <aside>
         <section class="content">
-            <div class="ui-btn-back">
+            <div class="ui-btn-back" hidden="hidden">
                 <button type="button" class="btn btn-default btn-back">
                     <i class="fa fa-angle-left"></i>
                     返回
@@ -44,32 +56,40 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box">
-                            <form action="javascript:void(0)" class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">标题</label>
+                            <form action="javascript:void(0)" class="form-horizontal" style="padding: 20px 0;">
 
-                                    <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">留言者</label>
+
+                                    <div class="col-sm-7">
+                                        {{ results.message_name }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">标题</label>
+
+                                    <div class="col-sm-7">
                                         {{ results.title_title }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">留言内容</label>
+                                    <label class="col-sm-2 control-label">留言内容</label>
 
-                                    <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    <div class="col-sm-7">
                                         {{ results.content_content }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">回复内容</label>
+                                    <label class="col-sm-2 control-label">回复内容</label>
 
-                                    <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    <div class="col-sm-7">
                                         {{ results.reply_content }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-6 col-sm-4 col-md-2 col-lg-2 control-label">留言时间</label>
+                                    <label class="col-sm-2 control-label">留言时间</label>
 
-                                    <div class="col-xs-6 col-sm-8 col-md-10 col-lg-10 control-label eo-detail">
+                                    <div class="col-sm-7">
                                         {{ results.create_time }}
                                     </div>
                                 </div>
@@ -86,8 +106,6 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
 <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <script src="{% static 'bootstrap/AdminLTE/js/plugins/daterangepicker/moment.zh-cn.js' %}"></script>
-
-
 <script>
     $(function () {
         // 返回
@@ -95,7 +113,10 @@
             window.history.back();
         });
     });
-
+    if (window.history.length > 1) {
+        $(".ui-btn-back").show();
+        $(".detail-show").show();
+    }
 </script>
 </body>
 </html>

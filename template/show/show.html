@@ -20,27 +20,11 @@
     <div class="header wrap"></div>
 </div>
 <ul id="nav" class="wrap">
+    {% for i in nav_mule %}
     <li>
-        <a href="/" class="active">首&nbsp;页</a>
+        <a href="{{ i.url }}" class="{{ i.class }}">{{ i.name }}</a>
     </li>
-    <li>
-        <a href="/show_info/1">公告</a>
-    </li>
-    <li>
-        <a href="/show_info/2">教学文件</a>
-    </li>
-    <li>
-        <a href="/show_info/3">经验交流</a>
-    </li>
-    <li>
-        <a href="/show_counsellor">辅导员风采</a>
-    </li>
-    <li>
-        <a href="/show_info/6">留言板</a>
-    </li>
-    <li>
-        <a href="/login">登录</a>
-    </li>
+    {% endfor %}
 </ul>
 
 <div id="main" class="wrap">

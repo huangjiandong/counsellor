@@ -29,6 +29,54 @@ def show_info(request, type_type):
         head_tile = "学术期刊"
     elif type_type == "6":
         head_tile = "留言板"
+    nav_mule = [
+        {
+            "url": "/",
+            "class": "",
+            "name": "首 页",
+            "type_type": "/"
+        },
+        {
+            "url": "show_info/1",
+            "class": "",
+            "name": "公 告",
+            "type_type": "1"
+        },
+        {
+            "url": "/show_info/2",
+            "class": "",
+            "name": "教学文件",
+            "type_type": "2"
+        },
+        {
+            "url": "/show_info/3",
+            "class": "",
+            "name": "经验交流",
+            "type_type": "3"
+        },
+        {
+            "url": "/show_counsellor",
+            "class": "",
+            "name": "辅导员风采",
+            "type_type": "show_counsellor"
+        },
+        {
+            "url": "/show_info/6",
+            "class": "",
+            "name": "留言板",
+            "type_type": "6"
+        },
+        {
+            "url": "/login",
+            "class": "",
+            "name": "登 录",
+            "type_type": "login"
+        },
+    ]
+    for i in nav_mule:
+        if i["type_type"] == type_type:
+            i["class"] = "active"
+            break
     db = get_db()
     page_type = request.REQUEST.get('page_type', "")
     now_page = int(request.REQUEST.get('now_page', 1))
