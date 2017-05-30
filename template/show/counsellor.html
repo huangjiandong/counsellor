@@ -44,13 +44,10 @@
 
 <div id="main" class="wrap">
     <div class="left">
-        <h2 class="left_title">分类</h2>
-        <div class="sideMen" style="margin:0 auto">
-        </div><!-- sideMen End -->
         <!-- 搜索 -->
         <div class="search">
-            <input id="username" name="username" class="text" type="text" value="" placeholder="Search website"/>
-            <input class="btn" type="submit" value="搜索"/>
+            <input class="search-name" type="text" placeholder="Search website" value=""/>
+            <button class="btn btn-search">搜索</button>
         </div>
     </div>
 
@@ -59,7 +56,7 @@
         <div class="right_top">
             <ul>
                 <li><h4>当前位置：</h4></li>
-                <li>首页</li>
+                <li><a href="/">首页</a></li>
                 <li> &nbsp;> 辅导员风采</li>
             </ul>
         </div>
@@ -102,7 +99,6 @@
                             上一页<<
                         </a>
                     {% endif %}
-
                     {% if page_info.has_next %}
                         <a href="{% url "show_info/{{ type_type }}" %}?now_page={{ now_page }}&page_type=page_down">
                             下一页>>
@@ -111,12 +107,10 @@
                 {% else %}
                     <span>共<b style="color:blue">0</b>条数据</span>,<span>共<b style="color:blue">0</b>页</span>
                 {% endif %}
+                <input class="jump-name" type="text" placeholder="页码" value="{{ now_page }}" style="width: 30px"/>
+                <button class="btn btn-jump">跳转</button>
             </div>
-
-
         </div>
-
-
     </div>
 </div>
 <div id="footer" class="wrap"></div>
@@ -133,5 +127,17 @@
         autoPlay: true
     });
 
+</script>
+<script>
+    $(".btn-search").click(function () {
+        var username = $('.search-name').val();
+        var new_href = location.pathname + "?username=" + username;
+        window.location.href = new_href;
+    });
+    $(".btn-jump").click(function () {
+        var now_page = $('.jump-name').val();
+        var new_href = location.pathname + "?now_page=" + now_page + "&page_type=jump";
+        location.href = new_href;
+    });
 </script>
 </html>

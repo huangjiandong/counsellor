@@ -17,11 +17,39 @@ def show_info(request, type_type):
     :param type_type:
     :return:
     """
+    if type_type == "1":
+        head_tile = "公告"
+    elif type_type == "2":
+        head_tile = "教学文件"
+    elif type_type == "3":
+        head_tile = "经验交流"
+    elif type_type == "4":
+        head_tile = "通知"
+    elif type_type == "5":
+        head_tile = "学术期刊"
+    elif type_type == "6":
+        head_tile = "留言板"
     db = get_db()
-    if type_type == '6':
-        objects = db.ebf_messages.find({'type_type': "2"})
+    page_type = request.REQUEST.get('page_type', "")
+    now_page = int(request.REQUEST.get('now_page', 1))
+    title = request.REQUEST.get("title", "")
+    if page_type == 'page_up':
+        now_page -= 1
+    elif page_type == 'page_down':
+        now_page += 1
+    elif page_type == 'jump':
+        pass
     else:
-        objects = db.ebf_content.find({'type_type': type_type})
+        now_page = 1
+    param = {}
+    if title:
+        param["title_title"] = title
+    if type_type == '6':
+        param["type_type"] = "2"
+        objects = db.ebf_messages.find(param)
+    else:
+        param["type_type"] = type_type
+        objects = db.ebf_content.find(param)
     number = 10
     if objects:
         new_objects = []
@@ -30,16 +58,12 @@ def show_info(request, type_type):
             r = {key.strip('_'): value for key, value in x.items()}
             new_objects.append(r)
         p = Paginator(new_objects, number)  # 每页10条数据的一个分页器
-        now_page = 1
-        try:
-            page_type = request.REQUEST.get('page_type', None)
-            now_page = int(request.REQUEST.get('now_page', 1))
-            if page_type == 'page_up':
-                now_page -= 1
-            elif page_type == 'page_down':
-                now_page += 1
-        except Exception as e:
-            logging.exception(e)
+        count = p.count
+        if now_page != 1 and now_page > count:
+            if count == 0:
+                now_page = 1
+            else:
+                now_page = count
         page_info = p.page(now_page)  # 第?页
         results = page_info.object_list  # 第?页的数据
     else:

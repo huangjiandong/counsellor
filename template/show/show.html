@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>公告</title>
+    <title>{{ head_tile }}</title>
     <link href="{% static 'show/css/product.css' %}" rel="stylesheet"/>
     <script type="text/javascript" src="{% static 'show/js/jquery1.42.min.js' %}">
 
@@ -48,10 +48,8 @@
 
         <!-- 搜索 -->
         <div class="search">
-            <form action="">
-                <input id="text1" class="text" type="text" value="Search website"/>
-                <input class="btn" type="submit" value="搜索"/>
-            </form>
+            <input class="search-name" type="text" placeholder="Search website" value="{{ title }}"/>
+            <button class="btn btn-search">搜索</button>
         </div>
     </div>
 
@@ -60,14 +58,14 @@
         <div class="right_top">
             <ul>
                 <li><h4>当前位置：</h4></li>
-                <li>首页</li>
-                <li> &nbsp;> 公告</li>
+                <li><a href="/">首页</a></li>
+                <li> &nbsp;> {{ head_tile }}</li>
             </ul>
         </div>
         <div class="right_content">
             <div class="txtScroll-top">
                 <div class="hd">
-                    <h3 class="title_color">公告</h3>
+                    <h3 class="title_color">{{ head_tile }}</h3>
                     <a class="next"></a>
                     <ul></ul>
                     <a class="prev"></a>
@@ -120,6 +118,8 @@
                 {% else %}
                     <span>共<b style="color:blue">0</b>条数据</span>,<span>共<b style="color:blue">0</b>页</span>
                 {% endif %}
+                <input class="jump-name" type="text" placeholder="页码" value="{{ now_page }}" style="width: 30px"/>
+                <button class="btn btn-jump">跳转</button>
             </div>
         </div>
     </div>
@@ -128,6 +128,20 @@
 </body>
 <script type="text/javascript">
     jQuery(".sideMen").slide({titCell: "h3 em", targetCell: "ul", trigger: "mouseover"});
+</script>
+<script>
+    $(".btn-search").click(function () {
+        var username = $('.search-name').val();
+{#        var old_href = location.protocol + location.host + location.pathname;#}
+        var new_href = location.pathname + "?username=" + username;
+        window.location.href = new_href;
+    });
+    $(".btn-jump").click(function () {
+        var now_page = $('.jump-name').val();
+{#        var old_href = location.protocol + location.host + location.pathname;#}
+        var new_href = location.pathname + "?now_page=" + now_page + "&page_type=jump";
+        location.href = new_href;
+    });
 </script>
 </html>
 
